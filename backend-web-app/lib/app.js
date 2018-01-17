@@ -135,6 +135,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', require('./routes/root'));
+app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler
 function redirectUnmatched(req, res) {

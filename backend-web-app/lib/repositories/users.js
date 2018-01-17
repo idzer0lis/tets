@@ -21,6 +21,7 @@ module.exports = {
   deleteAllRememberMeCookiesByUserId,
   deleteRememberMeCookieByUserId,
   findUserActivationCode,
+  getPagedUsersWithRoles,
   getRoles,
   getUserByActivationCode,
   getUserByEmail,
@@ -35,8 +36,35 @@ module.exports = {
 };
 /* eslint-enable no-use-before-define */
 
+const { performQueries, applyPagination, extractQueryFilters } = require('./_toolbelt');
+
 const moment = require('moment');
 const knex = require('../db');
+
+function getPagedUsersWithRoles(dataTable) {
+  return performQueries(
+    applyPagination(
+      dataTable,
+      extractQueryFilters(
+        dataTable,
+        knex('user')
+          .join('user_role', 'user_role.user_id', 'user.user_id')
+          .join('role', 'user_role.role_code', 'role.role_code'),
+        ['user.first_name', 'user.last_name', 'user.email', 'user.company_name', 'user_role.role_code', 'role.description'],
+      ),
+    ),
+    [
+      'user.user_id',
+      'user.first_name',
+      'user.last_name',
+      'user.company_name',
+      'user.email',
+      'user.activated_at',
+      'role.role_code',
+      'role.description AS role_description',
+    ],
+  );
+}
 
 function getUserById(id) {
   return knex('user').where({ user_id: id }).first().then((user) => _.omit(user, 'password'));

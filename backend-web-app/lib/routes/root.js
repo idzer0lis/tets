@@ -24,11 +24,11 @@ router.get('/404', (req, res, next) => res.status(404).render('404', {
 
 router.get('/', isLoggedIn, (req, res, next) => res.render('general-pages/dashboard', {
   locals: res.locals,
-  title: 'Wealth - Admin Dashboard',
+  title: 'WealthE - Admin Dashboard',
 }));
 
 router.get('/login', isNotLoggedIn, asyncMiddleware(async (req, res, next) => res.render('login', {
-  title: 'Wealth - Login',
+  title: 'WealthE - Login',
   layout: false,
   locals: res.locals,
 })));
