@@ -3,7 +3,8 @@ const cc = require('change-case');
 const logger = require('../helpers/logger');
 
 const registeredCommands = {
-  // empty for now
+  LOGOUT_USER: 'LOGOUT_USER',
+  SET_USER_REMEMBER_ME: 'SET_USER_REMEMBER_ME',
 };
 
 const commandNames = Object.keys(registeredCommands);

@@ -39,7 +39,7 @@ const moment = require('moment');
 const knex = require('../db');
 
 function getUserById(id) {
-  return knex('users').where({ user_id: id }).first().then((user) => _.omit(user, 'password'));
+  return knex('user').where({ user_id: id }).first().then((user) => _.omit(user, 'password'));
 }
 
 function getUserWithRoles(id) {
@@ -49,14 +49,14 @@ function getUserWithRoles(id) {
         return Promise.resolve(user);
       }
 
-      return knex('roles')
-        .join('users_roles', 'roles.role_code', 'users_roles.role_code')
-        .join('roles_permissions', 'users_roles.role_code', 'roles_permissions.role_code')
-        .join('permissions', 'roles_permissions.permission_code', 'permissions.permission_code')
-        .where('users_roles.user_id', user.user_id)
+      return knex('role')
+        .join('user_role', 'role.role_code', 'user_role.role_code')
+        .join('role_permission', 'user_role.role_code', 'role_permission.role_code')
+        .join('permission', 'role_permission.permission_code', 'permission.permission_code')
+        .where('user_role.user_id', user.user_id)
         .select(
-          'roles.role_code',
-          'permissions.permission_code',
+          'role.role_code',
+          'permission.permission_code',
         )
         .then((results) => {
           const seenRoles = {};
@@ -85,22 +85,22 @@ function getUserWithRoles(id) {
 function getUserByEmail(email) {
   // eslint-disable-next-line no-param-reassign
   email = email.toLowerCase();
-  return knex('users').whereRaw('lower(email) = lower(?)', [email]).first();
+  return knex('user').whereRaw('lower(email) = lower(?)', [email]).first();
 }
 
 function getUserByPasswordResetCode(passwordResetCode) {
-  return knex('users').where({ password_reset_code: passwordResetCode }).first();
+  return knex('user').where({ password_reset_code: passwordResetCode }).first();
 }
 
 function getUserIdByToken(rememberMe) {
-  return knex('remember_me_cookies')
+  return knex('remember_me_cookie')
     .where('cookie', rememberMe)
     .andWhere('expiration_date', '>', moment().format('YYYY-MM-DD'))
     .first('user_id');
 }
 
 function changeUserPassword(passwordResetCode, password) {
-  return knex('users')
+  return knex('user')
     .where({ password_reset_code: passwordResetCode })
     .update({
       password,
@@ -115,7 +115,7 @@ function setUserPasswordResetCode(email, resetPasswordCode) {
   // eslint-disable-next-line no-param-reassign
   email = email.toLowerCase();
 
-  return knex('users')
+  return knex('user')
     .whereRaw('lower(email) = lower(?)', [email])
     .update({
       password_reset_code: resetPasswordCode,
@@ -126,7 +126,7 @@ function setUserPasswordResetCode(email, resetPasswordCode) {
 }
 
 function activateUserByActivationCode(activation_code, password) {
-  return knex('users')
+  return knex('user')
     .where({ activation_code })
     .update({
       password,
@@ -143,7 +143,7 @@ function activateUserByActivationCode(activation_code, password) {
  * @param role_code String role code
  */
 function assignRoleToUser(user_id, role_code) {
-  return knex.insert({ user_id, role_code }).into('users_roles');
+  return knex.insert({ user_id, role_code }).into('user_role');
 }
 
 function createUser(userData) {
@@ -152,12 +152,12 @@ function createUser(userData) {
     userData.email = userData.email.toLowerCase();
   }
 
-  return knex.returning('*').insert(userData).into('users')
+  return knex.returning('*').insert(userData).into('user')
     .then(([user]) => _.omit(user, 'password'));
 }
 
 function setCookie(user_id, cookie) {
-  return knex('remember_me_cookies')
+  return knex('remember_me_cookie')
     .insert({
       user_id,
       cookie,
@@ -171,7 +171,7 @@ function setCookie(user_id, cookie) {
  * @param cookie String the cookie to delete
  */
 function deleteRememberMeCookieByUserId(user_id, cookie) {
-  return knex('remember_me_cookies')
+  return knex('remember_me_cookie')
     .where({ user_id, cookie })
     .del();
 }
@@ -187,11 +187,11 @@ function deleteAllRememberMeCookiesByUserId(user_id) {
 }
 
 function findUserActivationCode(activation_code) {
-  return knex('users').select('activation_code').where({ activation_code }).first();
+  return knex('user').select('activation_code').where({ activation_code }).first();
 }
 
 function getRoles() {
-  return knex('roles').select('*');
+  return knex('role').select('*');
 }
 
 
@@ -201,12 +201,12 @@ function inviteTokenIssuer(userData) {
     userData.email = userData.email.toLowerCase();
   }
 
-  return knex.returning('*').insert(userData).into('users')
+  return knex.returning('*').insert(userData).into('user')
     .then(([user]) => _.omit(user, 'password'));
 }
 
 function assignRoleToTokenIssuer(user_id) {
-  return knex.insert({ user_id, role_code: 'TOKEN_ISSUER' }).into('users_roles');
+  return knex.insert({ user_id, role_code: 'TOKEN_ISSUER' }).into('user_role');
 }
 
 function sendInvitationToTokenIssuer(sponsor_firm_user_id, token_issuer_user_id) {
@@ -220,14 +220,14 @@ function sendInvitationToTokenIssuer(sponsor_firm_user_id, token_issuer_user_id)
 }
 
 function getUserByActivationCode(activation_code) {
-  return knex('users')
+  return knex('user')
     .where({ activation_code })
     .select('*')
     .then(([user]) => _.omit(user, 'password'));
 }
 
 async function activateInvitedUser(activation_code, password, token_issuer_user_id) {
-  const user = await knex('users')
+  const user = await knex('user')
     .where({ activation_code })
     .update({
       activation_code: null,
@@ -247,7 +247,7 @@ async function activateInvitedUser(activation_code, password, token_issuer_user_
 }
 
 function changeUserPasswordById(user_id, password) {
-  return knex('users')
+  return knex('user')
     .where({ user_id })
     .update({ password });
 }

@@ -9,7 +9,7 @@ const env = Object.assign({
   HTTP_SERVER_ADDRESS: '127.0.0.1',
 
   // Database configuration defaults
-  DATABASE_NAME: 'test',
+  DATABASE_NAME: 'wealthe',
   DATABASE_HOST: '127.0.0.1',
   DATABASE_USERNAME: 'andrei',
   DATABASE_PASSWORD: 'admin12',
@@ -31,7 +31,7 @@ const env = Object.assign({
   SESSION_MAX_AGE_SECONDS: 3600 * 4,
 
   // Remember me cookie
-  REMEMBER_ME_COOKIE_NAME: 'gbx.admin.rmc',
+  REMEMBER_ME_COOKIE_NAME: 'wealthe.admin.rmc',
   REMEMBER_ME_COOKIE_MAX_AGE_MS: 3600 * 24 * 14 * 1000,
 
   // Set to NO to enqueue e-mails in the database instead of sending them right away
@@ -53,7 +53,7 @@ const env = Object.assign({
 
   // System e-mail sender information
   SYSTEM_EMAIL_SENDER_NAME: 'GBX Team',
-  SYSTEM_EMAIL_SENDER_ADDRESS: 'no-reply@dev.gbx.udevoffice.ro',
+  SYSTEM_EMAIL_SENDER_ADDRESS: 'no-reply@dev.wealthe.udevoffice.ro',
 
   // URLs for site and assets
   FRONTEND_URL_WEBSITE_ROOT: 'http://127.0.0.1:8000',
@@ -80,17 +80,17 @@ const env = Object.assign({
   // -> <project ID>
   //    -> images (anything that is not a team member image)
   //       -> team-members (team member pictures)
-  PROJECT_FILES_STORAGE_ROOT_PATH: path.join(__dirname, '..', '..', 'storage', 'projects'),
-
-  // Amazon S3-specific Project storage keys
-  PROJECT_STORAGE_AMAZON_S3_ENABLED: 'NO',
-  PROJECT_STORAGE_AMAZON_S3_BUCKET_NAME: 'gbx-dev',
-  PROJECT_STORAGE_AMAZON_S3_ENDPOINT: 'http://localhost:9000/',
-  PROJECT_STORAGE_AMAZON_S3_REGION: '',
-  PROJECT_STORAGE_AMAZON_S3_SSL_ENABLED: 'NO',
-  PROJECT_STORAGE_AMAZON_S3_FORCE_PATH_STYLE: 'YES',
-  PROJECT_STORAGE_AMAZON_S3_ACCESS_KEY_ID: '96EY6J9H81216Q0ETP3V',
-  PROJECT_STORAGE_AMAZON_S3_SECRET_ACCESS_KEY: 'ecrb0/w3Ft+aQWAy/dZP3GjgswZVExzNM2LeLzWu',
+  // PROJECT_FILES_STORAGE_ROOT_PATH: path.join(__dirname, '..', '..', 'storage', 'projects'),
+  //
+  // // Amazon S3-specific Project storage keys
+  // PROJECT_STORAGE_AMAZON_S3_ENABLED: 'NO',
+  // PROJECT_STORAGE_AMAZON_S3_BUCKET_NAME: 'gbx-dev',
+  // PROJECT_STORAGE_AMAZON_S3_ENDPOINT: 'http://localhost:9000/',
+  // PROJECT_STORAGE_AMAZON_S3_REGION: '',
+  // PROJECT_STORAGE_AMAZON_S3_SSL_ENABLED: 'NO',
+  // PROJECT_STORAGE_AMAZON_S3_FORCE_PATH_STYLE: 'YES',
+  // PROJECT_STORAGE_AMAZON_S3_ACCESS_KEY_ID: '96EY6J9H81216Q0ETP3V',
+  // PROJECT_STORAGE_AMAZON_S3_SECRET_ACCESS_KEY: 'ecrb0/w3Ft+aQWAy/dZP3GjgswZVExzNM2LeLzWu',
 
   // General temporary storage path
   STORAGE_TEMP_PATH: path.join(__dirname, '..', '..', 'storage', 'tmp'),
@@ -121,7 +121,7 @@ const env = Object.assign({
   ETHERSCAN_ROOT_URL: 'https://etherscan.io/address/',
 
   // Registration/license key for the Froala Editor
-  FROALA_EDITOR_REGISTRATION_KEY: '',
+  // FROALA_EDITOR_REGISTRATION_KEY: '',
 
   // Settings for connecting to a Redis cache for general-purpose caching
   CACHE_REDIS_HOST: '127.0.0.1',

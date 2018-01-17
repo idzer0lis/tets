@@ -69,3 +69,6 @@ storage/
 /emails/action.html
 /emails/alert.html
 /run-off.js
+
+# Ignore generatePass.js file
+generatePass.js

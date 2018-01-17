@@ -30,6 +30,21 @@ require('./auth/mount-serializer')(passport, require('./auth/serializers/backoff
 
 const app = express();
 
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
+app.set('env', env.NODE_ENV);
+app.use(expressLayouts);
+
+// Trust the first proxy
+app.set('trust proxy', 1);
+
+// Place static files before the logger for now until we cna get a correct ignore glob
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Fail fast for static assets
+app.use(handleMissingStaticAssets(path.join(__dirname, '../public')));
+
 app.use(expressWinston.logger({
   winstonInstance: logger,
   meta: false,
@@ -119,7 +134,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.get('/', (req, res) => res.send('It works!'));
+app.use('/', require('./routes/root'));
 
 // catch 404 and forward to error handler
 function redirectUnmatched(req, res) {
