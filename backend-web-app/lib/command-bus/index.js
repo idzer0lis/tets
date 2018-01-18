@@ -4,6 +4,7 @@ const logger = require('../helpers/logger');
 
 const registeredCommands = {
   LOGOUT_USER: 'LOGOUT_USER',
+  LOGOUT_SITE_USER: 'LOGOUT_SITE_USER',
   SET_USER_REMEMBER_ME: 'SET_USER_REMEMBER_ME',
 };
 

@@ -50,7 +50,7 @@ router.get('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREAT
   const roles = await generalRepo.getRoles();
 
   return res.render('pages/create-user', {
-    title: 'GBX - Create User',
+    title: 'WealthE - Create User',
     locals: res.locals,
     user_roles: roles.map((item) => item),
   });
