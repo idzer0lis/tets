@@ -46,7 +46,7 @@ router.get('/data', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_
   });
 }));
 
-router.get('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREATE_ADMIN }), asyncMiddleware(async (req, res, next) => {
+router.get('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREATE_BACKOFFICE_USER }), asyncMiddleware(async (req, res, next) => {
   const roles = await generalRepo.getRolesWithoutTokenIssuer();
 
   return res.render('pages/create-user', {

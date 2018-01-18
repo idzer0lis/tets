@@ -38,7 +38,6 @@ module.exports = function authGuardBuilder({ roles = [], permissions = [], permi
       }
     }
 
-    console.log(permissions);
     if (permissions.length) {
       if (!req.user.permissions) {
         addErrorFlashMessage(req);
