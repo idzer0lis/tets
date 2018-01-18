@@ -26,13 +26,13 @@ var DatatableRemoteAjaxDemo = function () {
           },
         },
         pageSize: 10,
-        // saveState: {
-        //   cookie: true,
-        //   webstorage: true,
-        // },
+        saveState: {
+          cookie: false,
+          webstorage: false,
+        },
         serverPaging: true,
         serverFiltering: true,
-        serverSorting: true,
+        serverSorting: false,
       },
 
       // layout definition
@@ -68,20 +68,20 @@ var DatatableRemoteAjaxDemo = function () {
         {
           field: 'email',
           title: 'Email',
-          // sortable: 'asc', // default sort
-          filterable: false, // disable or enable filtering
+          sortable: false, // default sort
+          // filterable: false, // disable or enable filtering
           width: 300,
           // basic templating support for column rendering,
         }, {
           field: 'activated_at',
           title: 'Activated',
-          // sortable: 'asc', // default sort
-          filterable: false, // disable or enable filtering
+          sortable: false, // default sort
+          // filterable: false, // disable or enable filtering
           width: 100,
           template: function (row) {
             var status = {
-              true: {'title': 'Active', 'class': 'm-badge--metal'},
-              false: {'title': 'Inactive', 'class': ' m-badge--brand'},
+              true: {'title': 'Active', 'class': 'm-badge--success'},
+              false: {'title': 'Inactive', 'class': ' m-badge--danger'},
             };
             return '<span class="m-badge ' + status[row.activated].class + ' m-badge--wide">' + status[row.activated].title + '</span>';
           }
@@ -94,8 +94,8 @@ var DatatableRemoteAjaxDemo = function () {
           template: function (row) {
             let resendEmailButton = '';
 
-            if (row.activated_at === null) {
-              resendEmailButton = '<form action="/users/resend-activation-email/' + row.user_id + '" method="post" class="form-inline m--block-inline">\
+            if (row.activated === false) {
+              resendEmailButton = '<form action="/site-users/resend-activation-email/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
                                       <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
                                       <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Resend activation email">\
                                         <i class="fa fa-send"></i>\
@@ -104,9 +104,6 @@ var DatatableRemoteAjaxDemo = function () {
             }
 
             return '\
-						       <a href="/users/user-ips/' + row.user_id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="User IPs">\
-                     <i class="la la-list-ul"></i> \
-                   </a>\
                    '+ resendEmailButton +' \
 					';
           },

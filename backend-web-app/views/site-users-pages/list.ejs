@@ -24,22 +24,22 @@
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
-                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-                        <div class="row align-items-center">
-                            <div class="col-xl-12 order-2 order-xl-1">
-                                <div class="form-group m-form__group row align-items-center">
-                                    <div class="col-md-3 col-md-offset-6">
-                                        <div class="m-form__section m-form__section--first">
-                                            <div class="form-group m-form__group">
-                                                <div class="m-input-icon m-input-icon--left m--margin-top-30">
-                                                    <input type="text" class="form-control m-input" placeholder="Search..." name="free_text_search"
-                                                           id="generalSearchInput">
-                                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-1">
+                            <div class="form-group m-form__group row align-items-center">
+                                <div class="col-md-3 col-md-offset-6">
+                                    <div class="m-form__section m-form__section--first">
+                                        <div class="form-group m-form__group">
+                                            <div class="m-input-icon m-input-icon--left m--margin-top-30">
+                                                <input type="text" class="form-control m-input" placeholder="Search..."
+                                                       name="free_text_search"
+                                                       id="generalSearchInput">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-search"></i>
                                                         </span>
                                                     </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -47,10 +47,11 @@
                             </div>
                         </div>
                     </div>
-                    <!--end: Search Form -->
-                    <!--begin: Datatable -->
-                    <div class="m_datatable" id="site_users_datatable"></div>
-                    <!--end: Datatable -->
+                </div>
+                <!--end: Search Form -->
+                <!--begin: Datatable -->
+                <div class="m_datatable" id="site_users_datatable"></div>
+                <!--end: Datatable -->
             </div>
         </div>
     </div>
@@ -61,3 +62,4 @@
 <script type="text/javascript">
   window.csrfToken = <%- JSON.stringify(locals.csrfToken) %>;
 </script>
+<script type="text/javascript" src="/scripts/datatables/site-users.js"></script>

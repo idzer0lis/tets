@@ -1,5 +1,5 @@
 const { isLoggedIn, isNotLoggedIn } = require('../modules/logged-or-not');
-// const { isEmail } = require('validator');
+const { isEmail } = require('validator');
 const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
 const { isProperPassword, isPasswordMatch } = require('../helpers/password-validator');
 const flashMessages = require('../constants/flash-messages');
@@ -147,6 +147,90 @@ router.post('/activate', asyncMiddleware(async (req, res, next) => {
     message: activatedUser.message,
   });
 
+  return res.redirect('/login');
+}));
+
+router.post('/lost-password', asyncMiddleware(async (req, res, next) => {
+  setRequestErrorIfValidationFails(req, isEmail, 'email', 'The e-mail address provided is invalid');
+
+  if (!req.isValid) {
+    req.session.flash.messages.push({
+      type: 'danger',
+      message: req.validationErrors.join(','),
+    });
+    return res.redirect('/login');
+  }
+
+  const { result: user, error } = await commander.handle(commander.commands.INITIALIZE_BACKOFFICE_USER_PASSWORD_RESET, {}, { email: req.body.email });
+  if (error) {
+    req.session.flash.messages.push({
+      type: 'danger',
+      message: `Error: ${error.message}`,
+    });
+    return res.redirect('/login');
+  }
+
+  req.session.flash.messages.push({
+    type: user.type,
+    message: user.message,
+  });
+  if (user.state === false) {
+    return res.redirect('/login');
+  }
+  return res.redirect('/reset-request');
+}));
+
+router.get('/reset-request', asyncMiddleware(async (req, res, next) => res.render('outer-pages/generic-page', {
+  title: 'Password Reset Request',
+  header: 'You requested a password reset',
+  content: 'If the email you provided will be found in our database, you will receive a confirmation via email shortly.',
+  buttonText: 'Go back to Login',
+  buttonLink: '/login',
+  locals: res.locals,
+  layout: false,
+})));
+
+router.get('/reset-password', asyncMiddleware(async (req, res, next) => res.render('outer-pages/reset-password', {
+  title: 'GBX - Reset password',
+  layout: false,
+  passwordResetCode: req.query.code,
+  locals: res.locals,
+})));
+
+router.post('/reset-password', asyncMiddleware(async (req, res, next) => {
+  if (!req.body.password && !req.body.confirm_password) {
+    req.session.flash.messages.push({
+      type: 'danger',
+      message: 'Password fields cannot be empty.',
+    });
+    return res.redirect(`/reset-password?code=${req.body.password_reset_code}`);
+  }
+  setRequestErrorIfValidationFails(req, (f) => /^[a-zA-Z0-9_=-]{10,}$/.test(f), 'password_reset_code', 'The password reset code is missing or invalid');
+  setRequestErrorIfValidationFails(req, () => isPasswordMatch(req.body.password, req.body.confirm_password), 'password', 'Passwords do not match');
+  setRequestErrorIfValidationFails(
+    req, isProperPassword, 'password',
+    flashMessages.RECOVER_PASSWORD_INSECURE_PASSWORD,
+  );
+
+  if (!req.isValid) {
+    req.validationErrors.forEach((message) => {
+      req.session.flash.messages.push({
+        type: 'danger',
+        message,
+      });
+    });
+    return res.redirect(`/reset-password?code=${req.body.password_reset_code}`);
+  }
+
+  const { result: user, error } = await commander.handle(commander.commands.RESET_USER_PASSWORD, {}, { passwordResetCode: req.body.password_reset_code, password: req.body.password });
+  if (error) {
+    return next(error);
+  }
+
+  req.session.flash.messages.push({
+    type: user.type,
+    message: user.message,
+  });
   return res.redirect('/login');
 }));
 
