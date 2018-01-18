@@ -1,0 +1,115 @@
+<%- contentFor('body') %>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title ">
+                    Create User
+                </h3>
+            </div>
+            <div>
+                        <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                            <span class="m-subheader__daterange-label">
+                                <span class="m-subheader__daterange-title"></span>
+                                <span class="m-subheader__daterange-date m--font-brand"></span>
+                            </span>
+                        </span>
+            </div>
+        </div>
+    </div>
+    <!-- END: Subheader -->
+    <div class="m-content">
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15%">
+                <!--begin::Portlet-->
+                <div class="m-portlet">
+                    <!--begin::Form-->
+                    <form class="m-form" action="/users/create" method="post">
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="m-form__section m-form__section--first">
+                                        <div class="form-group m-form__group">
+                                            <label for="first_name">
+                                                First Name:
+                                            </label>
+                                            <input type="text" class="form-control m-input" id="first_name" name="first_name"
+                                                   placeholder="Enter first name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="m-form__section m-form__section--first">
+                                        <div class="form-group m-form__group">
+                                            <label for="last_name">
+                                                Last Name:
+                                            </label>
+                                            <input type="text" class="form-control m-input" id="last_name" name="last_name"
+                                                   placeholder="Enter last name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 2%">
+                                <div class="col-md-6">
+                                    <div class="m-form__section m-form__section--first">
+                                        <div class="form-group m-form__group">
+                                            <label for="email">
+                                                Email:
+                                            </label>
+                                            <input type="email" class="form-control m-input" id="email" name="email"
+                                                   placeholder="Enter email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="m-form__section m-form__section--first">
+                                        <div class="form-group m-form__group">
+                                            <label for="company_name">
+                                                Company Name:
+                                            </label>
+                                            <input type="text" class="form-control m-input" id="company_name" name="company_name"
+                                                   placeholder="Enter company name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 2%">
+                                <div class="col-md-6">
+                                    <div class="form-group m-form__group">
+                                        <label for="role">
+                                            Select User Role
+                                        </label>
+                                        <select class="form-control m-input" id="role" name="role">
+                                            <% user_roles.forEach((user_role) => { %>
+                                            <option value="<%= user_role.role_code %>">
+                                                <%= user_role.description %>
+                                            </option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- locals.csrfTokenInput %>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Portlet-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- contentFor('scripts') %>
