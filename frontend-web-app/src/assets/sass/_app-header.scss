@@ -1,0 +1,75 @@
+#app-header {
+  box-shadow: 0 5px 15px rgba(black, .05);
+}
+
+
+.navbar {
+  border: 0;
+  .navbar-nav {
+    li {
+      a {
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: relative;
+        .fa-user {
+          color: $red;
+          position: relative;
+          top: -1px;
+          margin: 0 3px 0 0;
+        }
+        &::after {
+          content: "";
+          background: transparent;
+          height: 5px;
+          width: 100%;
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        }
+        &:hover {
+          &::after {
+            background: $red;
+          }
+        }
+      }
+      &.active {
+        a {
+          &::after {
+            background: $red;
+          }
+        }
+      }
+      &.navbar-link-contribute {
+        a {
+          background: $red;
+          color: white;
+          &:hover {
+            background: $red-dark;
+            color: white;
+          }
+        }
+        &.active {
+          a {
+            background: $red-dark;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .btn.navbar-btn {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7.5px 15px;
+    margin-left: 15px;
+  }
+}
+
+.navbar-brand {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 50px;
+}

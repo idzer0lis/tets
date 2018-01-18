@@ -1,0 +1,15 @@
+#page-prohibited-country {
+
+    .prohibited-icon-lg {
+        @extend .img-responsive;
+        width: 255px;
+        margin: 0 auto;
+        opacity: 0.6;
+        margin-bottom: 30px;
+    }
+
+    a {
+        font-size: 18px;
+    }
+
+}
