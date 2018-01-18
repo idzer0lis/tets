@@ -122,8 +122,8 @@ if (env.CORS_ALLOWED !== 'YES') {
     if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
     logger.error('Bad or missing CSRF token!');
-    // return res.sendStatus(403);
-    return next();
+    return res.sendStatus(403);
+    // return next();
   }, (req, res, next) => {
     const csrfToken = req.csrfToken();
 

@@ -20,8 +20,7 @@
     "prepush": "npm run nsp",
     "nsp": "nsp check --reporter summary",
     "knex": "knex",
-    "api-frontend": "node lib/frontend-website-app.js",
-    "dev-start-frontend": "concurrently --kill-others \"cross-env NODE_API=frontend nodemon ./lib/frontend-website.js\" \"cross-env VUE_USE_LIVE_API=YES npm run --prefix ../frontend-web-app dev\""
+    "api-frontend": "node lib/frontend-website-app.js"
   },
   "author": "UdoDev",
   "license": "ISC",
