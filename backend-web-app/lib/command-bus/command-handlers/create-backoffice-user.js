@@ -42,7 +42,7 @@ async function handle({}, { user }) {
     });
   }
 
-  const siteUserExists = await siteUsersRepo.getSiteUserByEmail(user.email);
+  const siteUserExists = await siteUsersRepo.checkSiteUserExistenceByEmail(user.email);
 
   if (siteUserExists) {
     return Promise.resolve({
