@@ -88,7 +88,7 @@ async function handle({}, { user }) {
   });
 
   // We don't wait for this to happen and the outcome doesn't really interest us
-  commander.handle(commander.commands.SEND_USER_ACTIVATION_EMAIL, {}, { userDetails });
+  commander.handle(commander.commands.SEND_BACKOFFICE_USER_ACTIVATION_EMAIL, {}, { userDetails });
 
   return Promise.resolve({
     state: true, type: 'success', message: 'User saved!', new_user: userResult,
