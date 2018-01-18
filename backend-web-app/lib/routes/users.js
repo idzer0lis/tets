@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.use(isLoggedIn);
 
-router.get('/', authGuard({ permissions: permissionCodes.permission }), asyncMiddleware(async (req, res, next) => {
+router.get('/', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_SITE_USERS }), asyncMiddleware(async (req, res, next) => {
   res.locals.roles = await usersRepo.getRoles();
   return res.render('users-pages/list', {
     title: 'WealthE - Users List',
@@ -28,7 +28,7 @@ router.get('/', authGuard({ permissions: permissionCodes.permission }), asyncMid
   });
 }));
 
-router.get('/data', asyncMiddleware(async (req, res, next) => {
+router.get('/data', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_SITE_USERS }), asyncMiddleware(async (req, res, next) => {
   if (req.query.datatable.query !== undefined && req.query.datatable.query['role.role_code'] === undefined) {
     delete req.query.datatable.query['role.role_code'];
   }

@@ -13,6 +13,7 @@ const mapping = {
     permissionCodes.DEACTIVATE_BACKOFFICE_USER,
     permissionCodes.DEACTIVATE_SITE_USER,
     permissionCodes.EDIT_USER_DETAILS,
+    permissionCodes.MANAGE_BACKOFFICE_USERS,
     permissionCodes.MANAGE_SITE_USERS,
     permissionCodes.REMOVE_USER_IP_ADDRESS,
   ],

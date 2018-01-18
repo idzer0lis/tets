@@ -2,6 +2,7 @@ const permissions = {
   CREATE_ADMIN: 'Create Admin',
   ACTIVATE_BACKOFFICE_USER: 'Activate backoffice user',
   DEACTIVATE_BACKOFFICE_USER: 'Deactivate backoffice user',
+  MANAGE_BACKOFFICE_USERS: 'Manage backoffice users',
   MANAGE_SITE_USERS: 'Manage site users',
   ACTIVATE_SITE_USER: 'Activate site user',
   DEACTIVATE_SITE_USER: 'Deactivate site user',
