@@ -1,7 +1,7 @@
 const { isLoggedIn } = require('../modules/logged-or-not');
-// const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
+const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
 // const { isProperPassword, isPasswordMatch } = require('../helpers/password-validator');
-// const { isEmail } = require('validator');
+const { isEmail } = require('validator');
 const { permissionCodes } = require('../constants');
 // const logger = require('../helpers/logger');
 // const flashMessages = require('../constants/flash-messages');
@@ -16,7 +16,7 @@ const usersRepo = require('../repositories/users');
 
 const router = express.Router();
 
-// const commander = require('../command-bus');
+const commander = require('../command-bus');
 
 router.use(isLoggedIn);
 
@@ -49,11 +49,43 @@ router.get('/data', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_
 router.get('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREATE_BACKOFFICE_USER }), asyncMiddleware(async (req, res, next) => {
   const roles = await generalRepo.getRoles();
 
-  return res.render('pages/create-user', {
-    title: 'GBX - Create User',
+  return res.render('users-pages/create', {
+    title: 'WealthE - Create User',
     locals: res.locals,
     user_roles: roles.map((item) => item),
   });
+}));
+
+router.post('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREATE_BACKOFFICE_USER }), asyncMiddleware(async (req, res, next) => {
+  setRequestErrorIfValidationFails(req, (f) => /^\w[\w\d-]+(\s\s*[\w\d-]+)*$/.test(f), 'first_name', 'The First Name is missing or invalid');
+  setRequestErrorIfValidationFails(req, (f) => /^\w[\w\d-]+(\s\s*[\w\d-]+)*$/.test(f), 'last_name', 'The Last Name is missing or invalid');
+  setRequestErrorIfValidationFails(req, isEmail, 'email', 'Email address is either missing or invalid.');
+
+  if (!req.isValid) {
+    req.validationErrors.forEach((message) => {
+      req.session.flash.messages.push({
+        type: 'danger',
+        message,
+      });
+    });
+    return res.redirect('/users/create');
+  }
+
+  const { result: userSaveResult, error } = await commander.handle(commander.commands.CREATE_BACKOFFICE_USER, {}, { user: req.body });
+  if (error) {
+    return next(error);
+  }
+
+  req.session.flash.messages.push({
+    type: userSaveResult.type,
+    message: userSaveResult.message,
+  });
+
+  if (!userSaveResult.state) {
+    return res.redirect('/users/create');
+  }
+
+  return res.redirect('/users');
 }));
 
 module.exports = router;

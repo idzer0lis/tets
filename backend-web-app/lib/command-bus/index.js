@@ -3,6 +3,7 @@ const cc = require('change-case');
 const logger = require('../helpers/logger');
 
 const registeredCommands = {
+  CREATE_BACKOFFICE_USER: 'CREATE_BACKOFFICE_USER',
   LOGOUT_USER: 'LOGOUT_USER',
   SET_USER_REMEMBER_ME: 'SET_USER_REMEMBER_ME',
 };
