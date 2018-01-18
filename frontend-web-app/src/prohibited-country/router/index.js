@@ -11,7 +11,7 @@ const routes = [
     name: 'ProhibitedCountry',
     component: ProhibitedCountry,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
   },
   {

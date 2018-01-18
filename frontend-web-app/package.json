@@ -1,7 +1,7 @@
 {
-  "name": "gbx-frontend-web-app",
+  "name": "wealthe-frontend-web-app",
   "version": "1.0.0",
-  "description": "GBX Frontend Web App",
+  "description": "wealthe Frontend Web App",
   "author": "UdoDev",
   "private": true,
   "scripts": {

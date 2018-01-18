@@ -54,7 +54,7 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -63,7 +63,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -72,7 +72,7 @@ const routes = [
     name: 'Recover Password',
     component: RecoverPassword,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -81,7 +81,7 @@ const routes = [
     name: 'Change Pasword',
     component: ChangePassword,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -90,7 +90,7 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -99,7 +99,7 @@ const routes = [
     name: 'Contribute',
     component: Contribute,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -108,7 +108,7 @@ const routes = [
     name: 'Verification',
     component: Verification,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -117,7 +117,7 @@ const routes = [
     name: 'Logout',
     component: Logout,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -126,7 +126,7 @@ const routes = [
     name: 'ConfirmAccount',
     component: ConfirmAccount,
     meta: {
-      title: 'Welthe Migrate',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -135,7 +135,7 @@ const routes = [
     name: 'ProhibitedCountry',
     component: ProhibitedCountry,
     meta: {
-      title: 'Prohibited Country - Welthe Migrate',
+      title: 'Prohibited Country - Wealthe Migrate',
     },
   },
   {
@@ -143,7 +143,7 @@ const routes = [
     name: 'PageNotFound',
     component: PageNotFound,
     meta: {
-      title: 'Page not found - Welthe Migrate',
+      title: 'Page not found - Wealthe Migrate',
     },
   },
   {

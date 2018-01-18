@@ -45,7 +45,7 @@ Vue.use(VuePreventParentScroll);
 
 if (process.env.GA_SITE_KEY) {
   Vue.use(VueAnalytics, {
-    appName: 'GBX',
+    appName: 'Wealthe Migrate',
     appVersion: '1.0',
     trackingId: process.env.GA_SITE_KEY,
     vueRouter: router,
