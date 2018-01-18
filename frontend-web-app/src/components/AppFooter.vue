@@ -1,11 +1,11 @@
 <template>
   <footer id="app-footer" v-if="footerVisible">
-    <cookie-law
+    <!-- <cookie-law
       buttonText="Got It!">
       <div slot="message">
         This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a :href="getCookiePolicyUrl" target="_blank">Read the Cookie Policy</a>
       </div>
-    </cookie-law>
+    </cookie-law> -->
     <div class="container">
       <div class="footer-container">
         <!-- New footer -->
@@ -64,25 +64,7 @@ export default {
       if (process.env.COOKIE_POLICY_URL) {
         return process.env.COOKIE_POLICY_URL;
       }
-      return require('../assets/files/Cookie-Policy.pdf');
-    },
-    getTermsAndConditionsUrl() {
-      if (process.env.TERMS_AND_CONDITIONS_URL) {
-        return process.env.TERMS_AND_CONDITIONS_URL;
-      }
-      return require('../assets/files/Terms-and-Conditions.pdf');
-    },
-    getPrivacyPolicyUrl() {
-      if (process.env.PRIVACY_POLICY_URL) {
-        return process.env.PRIVACY_POLICY_URL;
-      }
-      return require('../assets/files/Privacy-Policy.pdf');
-    },
-    getTermsOfUseUrl() {
-      if (process.env.TERMS_OF_USE_URL) {
-        return process.env.TERMS_OF_USE_URL;
-      }
-      return require('../assets/files/Terms-of-Use.pdf');
+      //return require('../assets/files/Cookie-Policy.pdf');
     },
   },
   components: {

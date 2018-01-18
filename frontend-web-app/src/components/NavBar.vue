@@ -10,7 +10,7 @@
   					<span class="icon-bar"></span>
   				</button>
           <router-link class="navbar-brand" to="/">
-            <img src="../../src/assets/img/gbx-logo.svg" width="80" height="40" alt="Gibraltar Blockchain Exchange">
+            <img src="../../src/assets/img/wealthe-logo.svg" width="80" height="40" alt="Gibraltar Blockchain Exchange">
           </router-link>
   			</div>
   			<collapse class="navbar-collapse" v-model="showNavbar" v-if="navSectionsVisible">

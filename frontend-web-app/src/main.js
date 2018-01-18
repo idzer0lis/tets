@@ -8,6 +8,8 @@ import Cookie from 'js-cookie';
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+import Buefy from 'buefy'
+import 'buefy/lib/buefy.css'
 import { sync } from 'vuex-router-sync';
 import VueResourceMock from 'vue-resource-mock';
 import VueClipboard from 'vue-clipboard2';
@@ -38,6 +40,7 @@ import './assets/sass/main.scss';
 import App from './App.vue';
 
 Vue.use(VueResource);
+Vue.use(Buefy);
 Vue.use(VueClipboard);
 Vue.use(VModal);
 Vue.use(VueObserveVisibility);

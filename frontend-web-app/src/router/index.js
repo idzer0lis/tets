@@ -46,6 +46,10 @@ function authGuard(to, from, next) {
 }
 
 const redirects = [];
+redirects.push({
+  path: '/',
+  redirect: '/login'
+})
 
 const routes = [
   ...redirects,
@@ -94,24 +98,24 @@ const routes = [
     },
     beforeEnter: authGuard,
   },
-  {
-    path: '/contribute',
-    name: 'Contribute',
-    component: Contribute,
-    meta: {
-      title: 'Wealthe Migrate',
-    },
-    beforeEnter: authGuard,
-  },
-  {
-    path: '/kyc/verification',
-    name: 'Verification',
-    component: Verification,
-    meta: {
-      title: 'Wealthe Migrate',
-    },
-    beforeEnter: authGuard,
-  },
+  // {
+  //   path: '/contribute',
+  //   name: 'Contribute',
+  //   component: Contribute,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: authGuard,
+  // },
+  // {
+  //   path: '/kyc/verification',
+  //   name: 'Verification',
+  //   component: Verification,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: authGuard,
+  // },
   {
     path: '/logout',
     name: 'Logout',
@@ -121,23 +125,23 @@ const routes = [
     },
     beforeEnter: authGuard,
   },
-  {
-    path: '/confirm',
-    name: 'ConfirmAccount',
-    component: ConfirmAccount,
-    meta: {
-      title: 'Wealthe Migrate',
-    },
-    beforeEnter: nonAuthGuard,
-  },
-  {
-    path: '/_prohibited',
-    name: 'ProhibitedCountry',
-    component: ProhibitedCountry,
-    meta: {
-      title: 'Prohibited Country - Wealthe Migrate',
-    },
-  },
+  // {
+  //   path: '/confirm',
+  //   name: 'ConfirmAccount',
+  //   component: ConfirmAccount,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: nonAuthGuard,
+  // },
+  // {
+  //   path: '/_prohibited',
+  //   name: 'ProhibitedCountry',
+  //   component: ProhibitedCountry,
+  //   meta: {
+  //     title: 'Prohibited Country - Wealthe Migrate',
+  //   },
+  // },
   {
     path: '/404',
     name: 'PageNotFound',

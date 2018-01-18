@@ -64,7 +64,6 @@
           </div>
           <div class="col-xs-12 col-sm-3">
             <profile-status v-if="displayStatus"></profile-status>
-            <faq-aside></faq-aside>
           </div>
         </div>
       </div>
@@ -77,7 +76,6 @@
   import ContributionNavBar from '@/components/ContributionNavBar';
   import ContributionOverlay from '@/components/ContributionOverlayModal.vue';
   import ContributeAlert from '@/components/ContributeAlert';
-  import FaqAside from '@/components/FaqAside.vue';
   import ProfileStatus from '@/components/ProfileStatus.vue';
 
   import moment from 'moment';
