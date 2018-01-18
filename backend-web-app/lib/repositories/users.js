@@ -11,9 +11,7 @@ const _ = require('underscore');
 /* Have a module header available for easy reference */
 /* eslint-disable no-use-before-define */
 module.exports = {
-  activateInvitedUser,
   activateUserByActivationCode,
-  assignRoleToTokenIssuer,
   assignRoleToUser,
   changeUserPassword,
   changeUserPasswordById,
@@ -29,8 +27,6 @@ module.exports = {
   getUserByPasswordResetCode,
   getUserIdByToken,
   getUserWithRoles,
-  inviteTokenIssuer,
-  sendInvitationToTokenIssuer,
   setCookie,
   setUserPasswordResetCode,
 };
@@ -222,56 +218,11 @@ function getRoles() {
   return knex('role').select('*');
 }
 
-
-function inviteTokenIssuer(userData) {
-  if (userData.email) {
-    // eslint-disable-next-line no-param-reassign
-    userData.email = userData.email.toLowerCase();
-  }
-
-  return knex.returning('*').insert(userData).into('user')
-    .then(([user]) => _.omit(user, 'password'));
-}
-
-function assignRoleToTokenIssuer(user_id) {
-  return knex.insert({ user_id, role_code: 'TOKEN_ISSUER' }).into('user_role');
-}
-
-function sendInvitationToTokenIssuer(sponsor_firm_user_id, token_issuer_user_id) {
-  return knex
-    .insert({
-      sponsor_firm_user_id,
-      token_issuer_user_id,
-      sent_at: knex.raw('now()'),
-    })
-    .into('token_issuer_invitations');
-}
-
 function getUserByActivationCode(activation_code) {
   return knex('user')
     .where({ activation_code })
     .select('*')
     .then(([user]) => _.omit(user, 'password'));
-}
-
-async function activateInvitedUser(activation_code, password, token_issuer_user_id) {
-  const user = await knex('user')
-    .where({ activation_code })
-    .update({
-      activation_code: null,
-      password,
-      activated_at: knex.raw('now()'),
-    })
-    .returning('*')
-    .then((newUser) => _.omit(newUser, 'password'));
-
-  if (user) {
-    await knex('token_issuer_invitations')
-      .where({ token_issuer_user_id })
-      .update({ accepted_at: knex.raw('now()') });
-  }
-
-  return user;
 }
 
 function changeUserPasswordById(user_id, password) {

@@ -47,7 +47,7 @@ router.get('/data', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_
 }));
 
 router.get('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREATE_BACKOFFICE_USER }), asyncMiddleware(async (req, res, next) => {
-  const roles = await generalRepo.getRolesWithoutTokenIssuer();
+  const roles = await generalRepo.getRoles();
 
   return res.render('pages/create-user', {
     title: 'GBX - Create User',
