@@ -19,7 +19,8 @@
     "precommit": "lint-staged",
     "prepush": "npm run nsp",
     "nsp": "nsp check --reporter summary",
-    "knex": "knex"
+    "knex": "knex",
+    "api-frontend": "node lib/frontend-website-app.js"
   },
   "author": "UdoDev",
   "license": "ISC",

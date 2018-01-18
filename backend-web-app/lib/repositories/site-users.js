@@ -10,8 +10,8 @@ module.exports = {
   assignActivationCode,
   checkSiteUserExistenceByEmail,
   getPagedSiteUsers,
-  getSiteUserByEmail,
   getSiteUserById,
+  getSiteUserByEmail,
   getSiteUserDetailsById,
 };
 /* eslint-enable no-use-before-define */
