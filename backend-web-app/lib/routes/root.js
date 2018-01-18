@@ -1,8 +1,8 @@
 const { isLoggedIn, isNotLoggedIn } = require('../modules/logged-or-not');
 // const { isEmail } = require('validator');
-// const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
-// const { isProperPassword, isPasswordMatch } = require('../helpers/password-validator');
-// const flashMessages = require('../constants/flash-messages');
+const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
+const { isProperPassword, isPasswordMatch } = require('../helpers/password-validator');
+const flashMessages = require('../constants/flash-messages');
 
 const express = require('express');
 
@@ -12,7 +12,7 @@ const env = require('../config/env');
 const commander = require('../command-bus');
 
 const asyncMiddleware = require('../helpers/async-middleware');
-// const usersRepo = require('../repositories/users');
+const usersRepo = require('../repositories/users');
 
 const router = express.Router();
 
@@ -87,5 +87,67 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+
+router.get('/activate', asyncMiddleware(async (req, res, next) => {
+  if (!req.query.code) {
+    return res.redirect('/404');
+  }
+
+  const activationCode = await usersRepo.findUserActivationCode(req.query.code);
+  if (!activationCode) {
+    req.session.flash.messages.push({
+      type: 'danger',
+      message: 'Account is already activated or activation code expired or invalid',
+    });
+    return res.redirect('/login');
+  }
+
+  return res.render('outer-pages/activate-user-account', {
+    title: 'WealthE - Activate account',
+    layout: false,
+    locals: res.locals,
+    activationCode: req.query.code,
+  });
+}));
+
+router.post('/activate', asyncMiddleware(async (req, res, next) => {
+  if (req.body.password === '' || req.body.confirm_password === '' || (req.body.password === '' && req.body.confirm_password === '')) {
+    req.session.flash.messages.push({
+      type: 'danger',
+      message: 'Password fields cannot be empty.',
+    });
+
+    return res.redirect(`/activate?code=${req.body.activation_code}`);
+  }
+
+  setRequestErrorIfValidationFails(req, (f) => /^[a-zA-Z0-9_=-]{10,}$/.test(f), 'activation_code', 'The account activation code is missing or invalid');
+  setRequestErrorIfValidationFails(req, () => isPasswordMatch(req.body.password, req.body.confirm_password), 'password', 'Passwords do not match');
+  setRequestErrorIfValidationFails(
+    req, isProperPassword, 'password',
+    flashMessages.ACTIVATION_INSECURE_PASSWORD,
+  );
+
+  if (!req.isValid) {
+    req.validationErrors.forEach((message) => {
+      req.session.flash.messages.push({
+        type: 'danger',
+        message,
+      });
+    });
+    return res.redirect(`/activate?code=${req.body.activation_code}`);
+  }
+
+  const { result: activatedUser, error } = await commander.handle(commander.commands.ACTIVATE_BACKOFFICE_USER, {}, { activationCode: req.body.activation_code, password: req.body.password });
+  if (error) {
+    return next(error);
+  }
+
+  req.session.flash.messages.push({
+    type: activatedUser.type,
+    message: activatedUser.message,
+  });
+
+  return res.redirect('/login');
+}));
 
 module.exports = router;

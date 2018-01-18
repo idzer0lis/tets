@@ -93,34 +93,33 @@ var DatatableRemoteAjaxDemo = function () {
           filterable: false, // disable or enable filtering
           width: 200,
           // basic templating support for column rendering,
-        },
-        // {
-        //   field: 'Actions',
-        //   width: 110,
-        //   title: 'Actions',
-        //   sortable: false,
-        //   overflow: 'visible',
-        //   template: function (row) {
-        //     // var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-        //     let resendEmailButton = '';
-        //
-        //     if (row.activated_at === null) {
-        //       resendEmailButton = '<form action="/users/resend-activation-email/' + row.user_id + '" method="post" class="form-inline m--block-inline">\
-        //                               <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
-        //                               <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Resend activation email">\
-        //                                 <i class="fa fa-send"></i>\
-        //                               </button>\
-        //                            </form>';
-        //     }
-        //
-        //     return '\
-					// 	       <a href="/users/user-ips/' + row.user_id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="User IPs">\
-        //              <i class="la la-list-ul"></i> \
-        //            </a>\
-        //            '+ resendEmailButton +' \
-					// ';
-        //   },
-        // }
+        }, {
+          field: 'Actions',
+          width: 110,
+          title: 'Actions',
+          sortable: false,
+          overflow: 'visible',
+          template: function (row) {
+            // var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+            let resendEmailButton = '';
+
+            if (row.activated_at === null) {
+              resendEmailButton = '<form action="/users/resend-activation-email/' + row.user_id + '" method="post" class="form-inline m--block-inline">\
+                                      <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
+                                      <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Resend activation email">\
+                                        <i class="fa fa-send"></i>\
+                                      </button>\
+                                   </form>';
+            }
+
+            return '\
+						       <a href="/users/user-ips/' + row.user_id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="User IPs">\
+                     <i class="la la-list-ul"></i> \
+                   </a>\
+                   '+ resendEmailButton +' \
+					';
+          },
+        }
         ],
     });
 

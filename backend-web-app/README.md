@@ -16,7 +16,7 @@ This is the README for the wealthE back-office web app
 * `npm run lint-n-fix` runs ESLint with the `--fix` setting ; this also gets run automatically on `git commit` 
 * `npm run knex` allows using Knex without having it installed globally
 * `npm run nsp` allows using [nodesecurity.io CLI](https://nodesecurity.io/advisories) without having it installed globally ; this also gets run automatically on `git push`
-
+* `npm run api-frontend` starts the app exposing frontend API (without the frontend app)
 
 ## Dependencies
 

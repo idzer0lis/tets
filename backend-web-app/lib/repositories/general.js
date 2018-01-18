@@ -13,5 +13,5 @@ module.exports = {
 const knex = require('../db');
 
 function getRoles() {
-  return knex('roles').select().returning('*').orderBy('description', 'asc');
+  return knex('role').select().returning('*').orderBy('description', 'asc');
 }

@@ -40,7 +40,7 @@ const service = {
         });
     }),
 
-  checkFrontendUser: (email, password) => siteUsersRepo.getSiteUserByEmail(email)
+  checkFrontendUser: (email, password) => siteUsersRepo.checkSiteUserExistenceByEmail(email)
     .then(async (user) => {
       if (!user) {
         return { state: false, type: 'error', message: flashMessages.LOGIN_NONEXISTENT_EMAIL };

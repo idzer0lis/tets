@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-const recursiveSanitizer = require('../modules/recursive-request-body-sanitizer');
+// const recursiveSanitizer = require('../modules/recursive-request-body-sanitizer');
 const { isLoggedIn, isNotLoggedIn } = require('../modules/logged-or-not');
 const captcha = require('../helpers/captcha-middleware');
 const flashMessages = require('../constants/flash-messages');
@@ -76,7 +76,6 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
 });
 
 router.get('/session', asyncMiddleware(async (req, res, next) => {
-
   let userDetails = { session: null };
   if (req.user && req.user.site_user_id) {
     try {
