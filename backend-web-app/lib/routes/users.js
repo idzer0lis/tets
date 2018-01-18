@@ -88,4 +88,22 @@ router.post('/create', isLoggedIn, authGuard({ permissions: permissionCodes.CREA
   return res.redirect('/users');
 }));
 
+router.post('/resend-activation-email/:userId', isLoggedIn, authGuard({ permissions: permissionCodes.ACTIVATE_BACKOFFICE_USER }), asyncMiddleware(async (req, res, next) => {
+  const user = await usersRepo.getUserById(parseInt(req.params.userId, 10));
+  const userDetails = Object.assign({
+    name: `${user.first_name} ${user.last_name}`,
+    address: user.email.toLowerCase(),
+    activationCode: user.activation_code,
+  });
+
+  commander.handle(commander.commands.SEND_BACKOFFICE_USER_ACTIVATION_EMAIL, {}, { userDetails });
+
+  req.session.flash.messages.push({
+    type: 'success',
+    message: 'Activation e-mail successfully sent.',
+  });
+
+  return res.redirect('/users');
+}));
+
 module.exports = router;

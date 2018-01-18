@@ -52,7 +52,7 @@ const env = Object.assign({
   SMTP_POOL_RATE_LIMIT: '50',
 
   // System e-mail sender information
-  SYSTEM_EMAIL_SENDER_NAME: 'GBX Team',
+  SYSTEM_EMAIL_SENDER_NAME: 'WealthE Team',
   SYSTEM_EMAIL_SENDER_ADDRESS: 'no-reply@dev.wealthe.udevoffice.ro',
 
   // URLs for site and assets
