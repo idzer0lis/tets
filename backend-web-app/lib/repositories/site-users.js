@@ -12,6 +12,7 @@ module.exports = {
   assignActivationCode,
   checkSiteUserExistenceByEmail,
   createSiteUser,
+  deactivateSiteUserById,
   findActivationCode,
   getPagedSiteUsers,
   getSiteUserById,
@@ -43,6 +44,7 @@ function activateSiteUserById(site_user_id) {
     .update({
       activation_code: null,
       activated_at: knex.raw('now()'),
+      activated: true,
       deactivated_at: null,
     })
     .returning('*')
@@ -83,6 +85,18 @@ function createSiteUser(siteUserData) {
   return knex.returning('*').insert(_.pick(siteUserData, allowedFields)).into('site_user').then(([site_user]) => _.omit(site_user, 'password'));
 }
 
+function deactivateSiteUserById(site_user_id) {
+  return knex('site_user')
+    .where({ site_user_id })
+    .update({
+      activated_at: null,
+      activated: false,
+      deactivated_at: knex.raw('now()'),
+    })
+    .returning('*')
+    .then(([site_user]) => (site_user ? _.omit(site_user, 'password') : null));
+}
+
 function findActivationCode(activation_code) {
   return knex('site_user').where({ activation_code }).first();
 }
@@ -94,7 +108,7 @@ function getPagedSiteUsers(dataTable) {
       extractQueryFilters(
         dataTable,
         knex('site_user'),
-        ['email', 'activated'],
+        ['email'],
       ),
     ),
     [

@@ -222,7 +222,7 @@ router.post('/reset-password', asyncMiddleware(async (req, res, next) => {
     return res.redirect(`/reset-password?code=${req.body.password_reset_code}`);
   }
 
-  const { result: user, error } = await commander.handle(commander.commands.RESET_USER_PASSWORD, {}, { passwordResetCode: req.body.password_reset_code, password: req.body.password });
+  const { result: user, error } = await commander.handle(commander.commands.RESET_BACKOFFICE_USER_PASSWORD, {}, { passwordResetCode: req.body.password_reset_code, password: req.body.password });
   if (error) {
     return next(error);
   }

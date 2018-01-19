@@ -93,8 +93,16 @@ var DatatableRemoteAjaxDemo = function () {
           overflow: 'visible',
           template: function (row) {
             let resendEmailButton = '';
+            let activateSiteUserButton = '';
+            let deactivateSiteUserButton = '';
 
             if (row.activated === false) {
+              activateSiteUserButton = '<form action="/site-users/activate/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
+                                      <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
+                                      <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Activate site user">\
+                                        <i class="fa fa-check-square-o"></i>\
+                                      </button>\
+                                   </form>';
               resendEmailButton = '<form action="/site-users/resend-activation-email/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
                                       <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
                                       <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Resend activation email">\
@@ -103,8 +111,19 @@ var DatatableRemoteAjaxDemo = function () {
                                    </form>';
             }
 
+            if (row.activated === true) {
+              deactivateSiteUserButton = '<form action="/site-users/deactivate/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
+                                      <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
+                                      <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Deactivate site user">\
+                                        <i class="fa fa-ban"></i>\
+                                      </button>\
+                                   </form>';
+            }
+
             return '\
+                   '+ activateSiteUserButton +' \
                    '+ resendEmailButton +' \
+                   '+ deactivateSiteUserButton +' \
 					';
           },
         }
