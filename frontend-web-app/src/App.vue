@@ -4,7 +4,7 @@
     <transition name="fade">
       <router-view/>
     </transition>
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </div>
 </template>
 
@@ -49,6 +49,9 @@ export default {
       "danger": ($danger, $danger-invert)
   );
 
+  // Fonts
+  $family-primary: 'Yantramanav', sans-serif;
+  
   // Links
   $link: $primary;
   $link-invert: $primary-invert;

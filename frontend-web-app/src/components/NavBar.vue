@@ -1,24 +1,26 @@
 <template>
   <nav class="navbar is-primary">
-    <div class="navbar-brand">
-      <router-link tag="a" class="navbar-item" to="/">
-        <img :src="require('../assets/img/wealthe-logo-white.svg')" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-      </router-link>
-      <div class="navbar-burger" @click="toggleNavbar">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link tag="a" class="navbar-item" to="/">
+          <img :src="require('../assets/img/wealthe-logo-white.svg')" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+        </router-link>
+        <div class="navbar-burger" @click="toggleNavbar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
-    </div>
 
-    <div class="navbar-menu" :class="{'is-active': showNavbar}">
-      <div class="navbar-end">
-        <a v-if="!isLoggedIn" class="navbar-item" :href="loginLink">
-          LOGIN
-        </a>
-        <a v-if="!isLoggedIn" class="navbar-item" :href="registerLink">
-          CREATE ACCOUNT
-        </a>
+      <div class="navbar-menu" :class="{'is-active': showNavbar}">
+        <div class="navbar-end">
+          <a v-if="!isLoggedIn" class="navbar-item" :href="loginLink">
+            LOGIN
+          </a>
+          <a v-if="!isLoggedIn" class="navbar-item" :href="registerLink">
+            CREATE ACCOUNT
+          </a>
+        </div>
       </div>
     </div>
   </nav>
