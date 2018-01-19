@@ -126,6 +126,7 @@
                         <i class="m-menu__section-icon flaticon-more-v3"></i>
                     </li>
 
+                    <% if (locals.user.permissions.indexOf('MANAGE_BACKOFFICE_USERS') !== -1) { %>
                     <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"
                         data-menu-submenu-toggle="hover">
                         <a href="/users" class="m-menu__link m-menu__toggle">
@@ -135,6 +136,19 @@
                             </span>
                         </a>
                     </li>
+                    <% } %>
+
+                    <% if (locals.user.permissions.indexOf('MANAGE_SITE_USERS') !== -1) { %>
+                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"
+                        data-menu-submenu-toggle="hover">
+                        <a href="/site-users" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon fa fa-users"></i>
+                            <span class="m-menu__link-text">
+                                Site Users
+                            </span>
+                        </a>
+                    </li>
+                    <% } %>
 
                     <li class="m-menu__section">
                         <h4 class="m-menu__section-text">
