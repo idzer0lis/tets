@@ -20,7 +20,7 @@
               <div class="row">
                 <div class="col-sm-4 col-md-3">
                   <div class="profile-picture">
-                    <img src="../assets/img/dummy/dummy-avatar.png" class="img-responsive" alt="Profile Picture">
+                    <!-- <img src="../assets/img/dummy/dummy-avatar.png" class="img-responsive" alt="Profile Picture"> -->
                   </div>
                   <!--<br>-->
                   <!--<button class="btn btn-outline-primary btn-sm center-block">Change Picture</button>-->

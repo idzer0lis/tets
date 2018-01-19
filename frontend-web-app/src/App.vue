@@ -29,16 +29,32 @@ export default {
 
 
 <style lang="scss">
-  .fade-enter-active {
-    transition: opacity .05s
-  }
-  .fade-leave-active {
-    transition: opacity .15s
-  }
-  .fade-enter, .fade-leave-to {
-    opacity: 0
-  }
-  .fade-enter-to {
-    opacity: 1
-  }
+  // Import Bulma's core
+  @import "~bulma/sass/utilities/_all";
+
+  // Set your colors
+  $primary: #20A1F2;
+  $primary-invert: findColorInvert($primary);
+
+  // Setup $colors to use as bulma classes (e.g. 'is-twitter')
+  $colors: (
+      "white": ($white, $black),
+      "black": ($black, $white),
+      "light": ($light, $light-invert),
+      "dark": ($dark, $dark-invert),
+      "primary": ($primary, $primary-invert),
+      "info": ($info, $info-invert),
+      "success": ($success, $success-invert),
+      "warning": ($warning, $warning-invert),
+      "danger": ($danger, $danger-invert)
+  );
+
+  // Links
+  $link: $primary;
+  $link-invert: $primary-invert;
+  $link-focus-border: $primary;
+
+  // Import Bulma and Buefy styles
+  @import "~bulma";
+  @import "~buefy/src/scss/buefy";
 </style>

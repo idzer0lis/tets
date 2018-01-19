@@ -15,7 +15,7 @@
                 <contribute-alert></contribute-alert>
                 <div class="content" v-if="userNone">
                   <br>
-                  <img src="../assets/img/icons/icon-identity.svg" class="contribute-icon-lg" alt="Icon">
+                  <!-- <img src="../assets/img/icons/icon-identity.svg" class="contribute-icon-lg" alt="Icon"> -->
                   <br><br>
                   <p class="lead">You need to verify your identity to be able to contribute to GBX Rock Token Sale</p>
                   <br>
