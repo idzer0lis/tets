@@ -106,6 +106,21 @@ router.get('/session', asyncMiddleware(async (req, res, next) => {
 
 router.get('/register', asyncMiddleware(async (req, res, next) => res.json(response(true, 'CSRF Token.', res.locals.csrfToken))));
 
+router.post('/check-etherium-address', asyncMiddleware(async (req, res, next) => {
+  if (!req.body.etherium_address) {
+    return res.json(response(false, 'Please enter an Etherium Address', null));
+  }
+
+  setRequestErrorIfValidationFails(
+    req, (f) => utils.isAddress(f),
+    'contribution_source_address',
+    'The contribution source address is missing or invalid',
+  );
+
+  return res.json(response(true, null, req.body.etherium_address));
+
+}));
+
 router.post('/register', captcha, asyncMiddleware(async (req, res, next) => {
   if (!req.captcha || !req.captcha.success) {
     return res.json(response(false, 'Please make sure you are not a robot', null));
@@ -122,11 +137,6 @@ router.post('/register', captcha, asyncMiddleware(async (req, res, next) => {
   setRequestErrorIfValidationFails(
     req, isProperPassword, 'password',
     flashMessages.REGISTER_INSECURE_PASSWORD,
-  );
-  setRequestErrorIfValidationFails(
-    req, (f) => utils.isAddress(f),
-    'contribution_source_address',
-    'The contribution source address is missing or invalid',
   );
 
   if (!req.isValid) {

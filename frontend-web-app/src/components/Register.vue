@@ -7,28 +7,33 @@
             <b-field label="E-mail address">
               <b-input type="email"
                   placeholder="me@example.com"
-                  v-model="email" 
+                  v-model="email"
                   :disabled="actionInProgress">
               </b-input>
             </b-field>
 
             <b-field label="Password">
-                <b-input type="password" 
+                <b-input type="password"
                     placeholder="Your password"
                     autocomplete="off"
-                    v-model="password" 
+                    v-model="password"
                     :disabled="actionInProgress">
                 </b-input>
             </b-field>
 
             <b-field label="Confirm Password">
-                <b-input type="password" 
+                <b-input type="password"
                     placeholder="Retype password"
                     autocomplete="off"
-                    v-model="confirm_password" 
+                    v-model="confirm_password"
                     :disabled="actionInProgress">
                 </b-input>
             </b-field>
+
+            <div class="form-group">
+              <recaptcha></recaptcha>
+            </div>
+
           </tab-content>
           <tab-content :before-change="validateSecondStep">
             <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
@@ -39,7 +44,7 @@
             <b-field label="Ethereum Address">
               <b-input type="text"
                   placeholder="eg 0x8703273072382382973203"
-                  v-model="ethereum_address" 
+                  v-model="ethereum_address"
                   :disabled="actionInProgress"
                   maxlength="42"
                   has-counter="true">
@@ -81,6 +86,7 @@
         terms_agreed: false,
         terms_chinese: false,
         terms_afghan: false,
+        etherium_address: ''
       };
     },
     computed: {
@@ -110,6 +116,17 @@
       this.$store.dispatch('setRegistrationTermsAccepted', { accepted: false, });
     },
     methods: {
+      validateSecondStep() {
+        this.$store.dispatch('checkEtheriumAddress', {
+          etherium_address: this.ethereum_address,
+          $http: this.$http,
+          $router: this.$router,
+          $notify: this.$notify,
+        });
+        if (this.$store.state.etherium_address_check) {
+          return true;
+        }
+      },
       termsAgreedChanged() {
         this.$nextTick(() => {
           if (this.terms_agreed) {

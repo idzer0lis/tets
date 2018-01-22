@@ -190,6 +190,52 @@ export const confirmAccount = async ({} = {}, { $http, $router, $notify, code, r
   }
 };
 
+export const checkEtheriumAddress = async ({ commit }, {
+  etherium_address, $http, $router, $notify, redirect = null,
+}) => {
+  commit('START_GLOBAL_ACTION');
+
+  try {
+    const { body } = await $http.post(API_ROOT_URL + '/api/check-etherium-address', {
+      etherium_address,
+    });
+
+    if (!Array.isArray(body.message)) {
+      body.message = [body.message]
+    }
+
+    if (body.success) {
+      body.message.forEach((message) => {
+        $notify({
+          type: 'success',
+          content: message,
+        });
+      });
+
+      commit('ETHERIUM_ADDRESS_CHECK', true);
+    } else {
+      body.message.forEach((message) => {
+        $notify({
+          type: 'danger',
+          content: message,
+        });
+      });
+
+      commit('ETHERIUM_ADDRESS_CHECK', false);
+
+    }
+  } catch (err) {
+    $notify({
+      type: 'danger',
+      content: 'An error has occurred! Please try again!',
+    });
+    console.error(err);
+  }
+
+  commit('END_GLOBAL_ACTION');
+};
+
+
 export const register = async ({ commit }, {
   email, password, confirm_password, gRecaptchaResponse, $http, $router, $notify, redirect = null,
 }) => {
