@@ -117,7 +117,7 @@ router.post('/check-etherium-address', asyncMiddleware(async (req, res, next) =>
     'The contribution source address is missing or invalid',
   );
 
-  return res.json(response(true, null, req.body.etherium_address));
+  return res.json(response(true, 'The Etherium address was verified successfully', req.body.etherium_address));
 
 }));
 

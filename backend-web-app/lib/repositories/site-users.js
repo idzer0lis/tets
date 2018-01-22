@@ -75,22 +75,28 @@ function createSiteUser(siteUserData) {
     'email',
     'activation_code',
     'password',
+    etherium_address,
   ];
 
   if (siteUserData.email) {
     // eslint-disable-next-line no-param-reassign
     siteUserData.email = siteUserData.email.toLowerCase();
   }
-
+  console.log(siteUserData);
   return knex.returning('*')
     .insert(_.pick(siteUserData, allowedFields)).into('site_user')
     .then(([site_user]) => _.omit(site_user, 'password'))
     .then(function(site_user) {
-      insert(site_user.site_user_details_id, 'site_user_details').into('site_user_details');
-    })
-    .then(function () {
-      insert(siteUserData.etherium_address, 'etherium_address').into('site_users_details');
-    });
+      console.log('site_users create repo', site_user);
+
+      knex
+        .insert(siteUserData.etherium_address, 'etherium_address')
+        .into('site_users_details')
+        .returning('*')
+        .then(function(site_user) {
+          knex.insert(site_user.site_user_details_id, 'site_user_details').into('site_user_details');
+        })
+      });
 }
 
 function deactivateSiteUserById(site_user_id) {
