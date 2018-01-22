@@ -56,6 +56,7 @@ async function handle({}, { user }) {
     activation_code: createRandomActivationCode(RANDOM_ACTIVATION_CODE_LENGTH),
     unique_site_user_tracking_id: uuidv4(),
     password: generateHash,
+    etherium_address: user.etherium_address
   });
 
   siteUserData.email = siteUserData.email.toLowerCase();

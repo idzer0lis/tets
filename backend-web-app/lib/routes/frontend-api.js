@@ -17,6 +17,8 @@ const commander = require('../command-bus');
 const env = require('../config/env');
 const siteUsersRepo = require('../repositories/site-users');
 
+const { utils } = require('web3');
+
 const logger = require('../helpers/logger');
 const asyncMiddleware = require('../helpers/async-middleware');
 
@@ -120,6 +122,11 @@ router.post('/register', captcha, asyncMiddleware(async (req, res, next) => {
   setRequestErrorIfValidationFails(
     req, isProperPassword, 'password',
     flashMessages.REGISTER_INSECURE_PASSWORD,
+  );
+  setRequestErrorIfValidationFails(
+    req, (f) => utils.isAddress(f),
+    'contribution_source_address',
+    'The contribution source address is missing or invalid',
   );
 
   if (!req.isValid) {

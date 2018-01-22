@@ -15,6 +15,9 @@ exports.up = async function up(knex) {
     table.string('identity_document_type', 50).notNullable();
     table.string('identity_document_number', 50).notNullable();
 
+    table.string('etherium_address', 150).notNullable();
+    table.unique('etherium_address');
+
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
 
