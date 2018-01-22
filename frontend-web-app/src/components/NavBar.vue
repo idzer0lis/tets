@@ -1,46 +1,29 @@
 <template>
-  <header id="app-header" class="navbar-fixed-top">
-  	<nav class="navbar navbar-default">
-  		<div class="container">
-  			<div class="navbar-header">
-  				<button type="button" class="navbar-toggle collapsed" @click="toggleNavbar">
-  					<span class="sr-only">Toggle navigation</span>
-  					<span class="icon-bar"></span>
-  					<span class="icon-bar"></span>
-  					<span class="icon-bar"></span>
-  				</button>
-          <router-link class="navbar-brand" to="/">
-            <img src="../../src/assets/img/gbx-logo.svg" width="80" height="40" alt="Gibraltar Blockchain Exchange">
-          </router-link>
-  			</div>
-  			<collapse class="navbar-collapse" v-model="showNavbar" v-if="navSectionsVisible">
-  				<ul class="nav navbar-nav">
-            <router-link tag="li" to="/listing" v-if="listingSectionsVisible && !listingRoutesAreRedirected" v-on:click.native="closeNavbarOnAction"><a>Listing</a></router-link>
-            <li v-if="listingSectionsVisible && listingRoutesAreRedirected"><a :href="listingLink">Listing</a></li>
-            <li v-on:click.native="closeNavbarOnAction"><a href="https://gbx.gi/" target="_blank">About</a></li>
-            <li v-on:click.native="closeNavbarOnAction"><a href="https://gbx.gi/news/" target="_blank">News</a></li>
-            <!-- <router-link tag="li" to="/about" v-on:click.native="closeNavbarOnAction"><a>About</a></router-link>
-            <router-link tag="li" to="/news" v-on:click.native="closeNavbarOnAction"><a>News</a></router-link> -->
-            <router-link tag="li" to="/contact" v-on:click.native="closeNavbarOnAction"><a>Contact</a></router-link>
-  				</ul>
-          <ul class="nav navbar-nav navbar-right" v-if="profileRoutesAreRedirected">
-            <li v-if="isLoggedIn"><a :href="profileLink"><i class="fa fa-user"></i> Profile</a></li>
-            <li v-if="isLoggedIn"><a :href="logoutLink">Log out</a></li>
-            <li v-if="!isLoggedIn"><a :href="loginLink">Login</a></li>
-            <li v-if="!isLoggedIn"><a :href="registerLink">Register</a></li>
-            <li><button class="btn btn-outline-primary navbar-btn" @click="contributeLinkClicked">Contribute Now to GBX Rock Token</button></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right" v-else>
-            <router-link tag="li" to="/profile" v-if="isLoggedIn" v-on:click.native="closeNavbarOnAction"><a><i class="fa fa-user"></i> Profile</a></router-link>
-            <router-link tag="li" to="/logout" v-if="isLoggedIn" v-on:click.native="closeNavbarOnAction"><a>Log out</a></router-link>
-            <router-link tag="li" to="/login" v-if="!isLoggedIn" v-on:click.native="closeNavbarOnAction"><a>Login</a></router-link>
-            <router-link tag="li" to="/register" v-if="!isLoggedIn" v-on:click.native="closeNavbarOnAction"><a>Register</a></router-link>
-            <router-link tag="button" class="btn btn-outline-primary navbar-btn" to="/ico/contribute" v-on:click.native="closeNavbarOnAction">Contribute Now to GBX Rock Token</router-link>
-          </ul>
-  			</collapse>
-  		</div>
-  	</nav>
-  </header>
+  <nav class="navbar is-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link tag="a" class="navbar-item" to="/">
+          <img :src="require('../assets/img/wealthe-logo-white.svg')" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+        </router-link>
+        <div class="navbar-burger" @click="toggleNavbar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="navbar-menu" :class="{'is-active': showNavbar}">
+        <div class="navbar-end">
+          <a v-if="!isLoggedIn" class="navbar-item" :href="loginLink">
+            LOGIN
+          </a>
+          <a v-if="!isLoggedIn" class="navbar-item" :href="registerLink">
+            CREATE ACCOUNT
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>

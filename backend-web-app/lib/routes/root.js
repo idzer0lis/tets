@@ -1,5 +1,5 @@
 const { isLoggedIn, isNotLoggedIn } = require('../modules/logged-or-not');
-// const { isEmail } = require('validator');
+const { isEmail } = require('validator');
 const { setRequestErrorIfValidationFails } = require('../helpers/request-body-validator');
 const { isProperPassword, isPasswordMatch } = require('../helpers/password-validator');
 const flashMessages = require('../constants/flash-messages');
@@ -161,7 +161,7 @@ router.post('/lost-password', asyncMiddleware(async (req, res, next) => {
     return res.redirect('/login');
   }
 
-  const { result: user, error } = await commander.handle(commander.commands.INITIALIZE_USER_PASSWORD_RESET, {}, { email: req.body.email });
+  const { result: user, error } = await commander.handle(commander.commands.INITIALIZE_BACKOFFICE_USER_PASSWORD_RESET, {}, { email: req.body.email });
   if (error) {
     req.session.flash.messages.push({
       type: 'danger',
@@ -179,6 +179,16 @@ router.post('/lost-password', asyncMiddleware(async (req, res, next) => {
   }
   return res.redirect('/reset-request');
 }));
+
+router.get('/reset-request', asyncMiddleware(async (req, res, next) => res.render('outer-pages/generic-page', {
+  title: 'Password Reset Request',
+  header: 'You requested a password reset',
+  content: 'If the email you provided will be found in our database, you will receive a confirmation via email shortly.',
+  buttonText: 'Go back to Login',
+  buttonLink: '/login',
+  locals: res.locals,
+  layout: false,
+})));
 
 router.get('/reset-password', asyncMiddleware(async (req, res, next) => res.render('outer-pages/reset-password', {
   title: 'GBX - Reset password',
@@ -212,7 +222,7 @@ router.post('/reset-password', asyncMiddleware(async (req, res, next) => {
     return res.redirect(`/reset-password?code=${req.body.password_reset_code}`);
   }
 
-  const { result: user, error } = await commander.handle(commander.commands.RESET_USER_PASSWORD, {}, { passwordResetCode: req.body.password_reset_code, password: req.body.password });
+  const { result: user, error } = await commander.handle(commander.commands.RESET_BACKOFFICE_USER_PASSWORD, {}, { passwordResetCode: req.body.password_reset_code, password: req.body.password });
   if (error) {
     return next(error);
   }
@@ -222,22 +232,6 @@ router.post('/reset-password', asyncMiddleware(async (req, res, next) => {
     message: user.message,
   });
   return res.redirect('/login');
-}));
-
-router.get('/reset-request', asyncMiddleware(async (req, res, next) => res.render('outer-pages/generic-page', {
-  title: 'Password Reset Request',
-  header: 'You requested a password reset',
-  content: 'If the email you provided will be found in our database, you will receive a confirmation via email shortly.',
-  buttonText: 'Go back to Login',
-  buttonLink: '/login',
-  locals: res.locals,
-  layout: false,
-})));
-
-router.get('/404', (req, res, next) => res.status(404).render('404', {
-  layout: false,
-  im: req.query.im,
-  locals: res.locals,
 }));
 
 module.exports = router;

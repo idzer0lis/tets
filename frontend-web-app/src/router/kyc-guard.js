@@ -19,7 +19,7 @@ function kycGuard(to, from, next) {
     });
 
     return next({
-      path: '/ico/verification',
+      path: '/kyc/verification',
     });
   }
 

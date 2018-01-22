@@ -4,11 +4,6 @@ import Router from 'vue-router';
 // We only load the bare minimum right away */
 import PageNotFound from '@/components/PageNotFound';
 
-const About = () => import(/* webpackChunkName: "group-app-main" */'@/components/About');
-const News = () => import(/* webpackChunkName: "group-app-main" */'@/components/News');
-const TermsAndConditions = () => import(/* webpackChunkName: "group-app-main" */'@/components/TermsAndConditions');
-const Contact = () => import(/* webpackChunkName: "group-app-main" */'@/components/Contact');
-
 const Register = () => import(/* webpackChunkName: "group-app-main" */'@/components/Register');
 const Login = () => import(/* webpackChunkName: "group-app-main" */'@/components/Login');
 
@@ -22,13 +17,8 @@ const ResetPassword = () => import(/* webpackChunkName: "group-profile-utility" 
 
 const Contribute = () => import(/* webpackChunkName: "group-ico-contribution" */'@/components/Contribute.vue');
 const Verification = () => import(/* webpackChunkName: "group-ico-contribution" */'@/components/Verification.vue');
-const Faq = () => import(/* webpackChunkName: "group-ico-contribution" */'@/components/Faq.vue');
-
-const IcoLandingHomepage = () => import(/* webpackChunkName: "group-app-landing" */'@/components/IcoLandingHomepage');
 
 const ProhibitedCountry = () => import(/* webpackChunkName: "group-dev-pages" */'@/components/ProhibitedCountry');
-const Homepage = () => import(/* webpackChunkName: "group-dev-pages" */'@/components/Homepage');
-const StyleGuide = () => import(/* webpackChunkName: "group-dev-pages" */'@/components/StyleGuide');
 
 import store from '../store';
 
@@ -55,117 +45,20 @@ function authGuard(to, from, next) {
   return next();
 }
 
-const Listing = () => import(/* webpackChunkName: "group-ico-listing" */'@/components/Listing.vue');
-const Projects = () => import(/* webpackChunkName: "group-ico-listing" */'@/components/Projects.vue');
-const Project = () => import(/* webpackChunkName: "group-ico-listing" */'@/components/Project.vue');
-const Favorites = () => import(/* webpackChunkName: "group-ico-listing" */'@/components/Favorites.vue');
-
 const redirects = [];
 redirects.push({
-  path: '/about',
-  beforeEnter: (to, from, next) => {
-    window.location = "https://gbx.gi/"
-  }
-});
-redirects.push({
-  path: '/news',
-  beforeEnter: (to, from, next) => {
-    window.location = "https://gbx.gi/news/"
-  }
-});
-if (process.env.ICO_LISTING_REDIRECT=== 'YES') {
-  redirects.push({ path: '/', redirect: { name: 'Listing' }});
-}
-if (process.env.LOGIN_REDIRECT=== 'YES') {
-  redirects.push({ path: '/', redirect: { name: 'Login' }});
-}
-
-const listingRoutes = [];
-if (process.env.ICO_LISTING_ENABLED === 'YES') {
-  listingRoutes.push({
-    path: '/projects/:project/:section?',
-    name: 'Project',
-    component: Project,
-    meta: {
-      title: 'GBX',
-    },
-  });
-  listingRoutes.push({
-    path: '/projects',
-    name: 'Projects',
-    component: Projects,
-    meta: {
-      title: 'GBX',
-    },
-  });
-  listingRoutes.push({
-    path: '/listing',
-    name: 'Listing',
-    component: Listing,
-    meta: {
-      title: 'GBX',
-    },
-  });
-  listingRoutes.push({
-    path: '/favorites',
-    name: 'Favorites',
-    component: Favorites,
-    meta: {
-      title: 'GBX',
-    },
-    beforeEnter: authGuard,
-  })
-}
+  path: '/',
+  redirect: '/login'
+})
 
 const routes = [
   ...redirects,
-  {
-    path: '/',
-    name: 'IcoLandingHomepage',
-    component: IcoLandingHomepage,
-    meta: {
-      title: 'GBX',
-    },
-  },
-  ...listingRoutes,
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: Contact,
-    meta: {
-      title: 'GBX',
-    },
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About,
-    meta: {
-      title: 'GBX',
-    },
-  },
-  {
-    path: '/news',
-    name: 'News',
-    component: News,
-    meta: {
-      title: 'GBX',
-    },
-  },
-  {
-    path: '/terms-and-conditions',
-    name: 'TermsAndConditions',
-    component: TermsAndConditions,
-    meta: {
-      title: 'GBX',
-    },
-  },
   {
     path: '/login',
     name: 'Login',
     component: Login,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -174,7 +67,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -183,16 +76,7 @@ const routes = [
     name: 'Recover Password',
     component: RecoverPassword,
     meta: {
-      title: 'GBX',
-    },
-    beforeEnter: nonAuthGuard,
-  },
-  {
-    path: '/reset-password',
-    name: 'Reset Pasword',
-    component: ResetPassword,
-    meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: nonAuthGuard,
   },
@@ -201,7 +85,7 @@ const routes = [
     name: 'Change Pasword',
     component: ChangePassword,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
@@ -210,85 +94,60 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
-  {
-    path: '/ico/contribute',
-    name: 'Contribute',
-    component: Contribute,
-    meta: {
-      title: 'GBX',
-    },
-    beforeEnter: authGuard,
-  },
-  {
-    path: '/ico/verification',
-    name: 'Verification',
-    component: Verification,
-    meta: {
-      title: 'GBX',
-    },
-    beforeEnter: authGuard,
-  },
-  {
-    path: '/ico/faq',
-    name: 'Faq',
-    component: Faq,
-    meta: {
-      title: 'GBX',
-    },
-    beforeEnter: authGuard,
-  },
+  // {
+  //   path: '/contribute',
+  //   name: 'Contribute',
+  //   component: Contribute,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: authGuard,
+  // },
+  // {
+  //   path: '/kyc/verification',
+  //   name: 'Verification',
+  //   component: Verification,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: authGuard,
+  // },
   {
     path: '/logout',
     name: 'Logout',
     component: Logout,
     meta: {
-      title: 'GBX',
+      title: 'Wealthe Migrate',
     },
     beforeEnter: authGuard,
   },
-  {
-    path: '/confirm',
-    name: 'ConfirmAccount',
-    component: ConfirmAccount,
-    meta: {
-      title: 'GBX',
-    },
-    beforeEnter: nonAuthGuard,
-  },
-  {
-    path: '/_homepage',
-    name: 'Homepage',
-    component: Homepage,
-    meta: {
-      title: 'GBX - Homepage',
-    },
-  },
-  {
-    path: '/_styleguide',
-    name: 'StyleGuide',
-    component: StyleGuide,
-    meta: {
-      title: 'Style guide - GBX',
-    },
-  },
-  {
-    path: '/_prohibited',
-    name: 'ProhibitedCountry',
-    component: ProhibitedCountry,
-    meta: {
-      title: 'Prohibited Country - GBX',
-    },
-  },
+  // {
+  //   path: '/confirm',
+  //   name: 'ConfirmAccount',
+  //   component: ConfirmAccount,
+  //   meta: {
+  //     title: 'Wealthe Migrate',
+  //   },
+  //   beforeEnter: nonAuthGuard,
+  // },
+  // {
+  //   path: '/_prohibited',
+  //   name: 'ProhibitedCountry',
+  //   component: ProhibitedCountry,
+  //   meta: {
+  //     title: 'Prohibited Country - Wealthe Migrate',
+  //   },
+  // },
   {
     path: '/404',
     name: 'PageNotFound',
     component: PageNotFound,
     meta: {
-      title: 'Page not found - GBX',
+      title: 'Page not found - Wealthe Migrate',
     },
   },
   {

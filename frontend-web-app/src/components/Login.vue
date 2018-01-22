@@ -1,51 +1,36 @@
 <template>
-  <div id="page-login" class="page">
-    <section id="page-intro">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="login-box-wrapper">
-              <div class="login-box">
-                <router-link to="/register" class="extra-login-register-link btn btn-outline-white">
-                  <span>Register a new account here</span>
-                  <i class="fa fa-arrow-right"></i>
-                </router-link>
-                <header class="login-box-header">
-                  <h2 class="text-center">Log into your account</h2>
-                </header>
-                <div class="alert alert-success alert-band text-center" v-for="message in flashMessages">
-                  {{message}}
-                </div>
-                <div class="login-box-body">
-                  <form action="/api/login" class="form" method="post">
-                    <div class="form-group">
-                      <input type="email" name="email" id="email" class="form-control" placeholder="Email" v-model="email" v-bind:disabled="actionInProgress">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" autocomplete="off" name="password" id="password" class="form-control" placeholder="Password" v-model="password" v-bind:disabled="actionInProgress">
-                    </div>
-                    <div class="form-group">
-                      <recaptcha></recaptcha>
-                    </div>
-                    <div class="form-group">
-                      <button type="submit" class="form-control btn btn-primary" v-on:click.prevent="submitLogin()" v-bind:disabled="actionInProgress"><i class="fa fa-circle-o fa-spin" v-if="actionInProgress"></i> Login</button>
-                    </div>
-                  </form>
-                </div>
-                <footer class="login-box-footer text-center">
-                  <p>Forgot your password?</p>
-                  <router-link to="/recover-password">Recover your password here <i class="fa fa-arrow-right"></i></router-link>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+  <registration-template>
+      <form action="/api/login" class="form" method="post">
+        <b-field label="E-mail address">
+            <b-input type="email"
+                placeholder="me@example.com"
+                v-model="email" 
+                :disabled="actionInProgress">
+            </b-input>
+        </b-field>
+
+        <b-field label="Password">
+            <b-input type="password" 
+                placeholder="Your password"
+                autocomplete="off"
+                v-model="password" 
+                :disabled="actionInProgress">
+            </b-input>
+        </b-field>
+
+        <recaptcha></recaptcha>
+
+        <button type="submit" class="button is-primary is-rounded"
+            v-on:click.prevent="submitLogin()" 
+            v-bind:disabled="actionInProgress">
+              LOGIN
+          </button>
+      </form>
+  </registration-template>
 </template>
 
 <script>
+  import RegistrationTemplate from './RegistrationTemplate.vue';
   import Recaptcha from './Recaptcha.vue';
   export default {
     name: 'Login',
@@ -61,6 +46,7 @@
       gRecaptchaResponse() { return this.$store.state.userCaptcha; },
     },
     components: {
+      RegistrationTemplate,
       Recaptcha,
     },
     mounted: function () {

@@ -8,6 +8,7 @@ import Cookie from 'js-cookie';
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+import Buefy from 'buefy'
 import { sync } from 'vuex-router-sync';
 import VueResourceMock from 'vue-resource-mock';
 import VueClipboard from 'vue-clipboard2';
@@ -42,10 +43,23 @@ Vue.use(VueClipboard);
 Vue.use(VModal);
 Vue.use(VueObserveVisibility);
 Vue.use(VuePreventParentScroll);
+Vue.use(Buefy, {
+  defaultIconPack: 'fa',
+  defaultContainerElement: 'body',
+  defaultDialogConfirmText: 'Confirm',
+  defaultDialogCancelText: 'Cancel',
+  defaultSnackbarDuration: 3500,
+  defaultToastDuration: 2000,
+  defaultTooltipType: 'is-primary',
+  defaultTooltipAnimated: 'animated',
+  defaultTimeFormatter: 'HH:mm',
+  defaultTimeParser: 'HH:mm',
+  defaultModalScroll: 'clip'
+});
 
 if (process.env.GA_SITE_KEY) {
   Vue.use(VueAnalytics, {
-    appName: 'GBX',
+    appName: 'Wealthe Migrate',
     appVersion: '1.0',
     trackingId: process.env.GA_SITE_KEY,
     vueRouter: router,

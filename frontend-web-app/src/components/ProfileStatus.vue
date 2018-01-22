@@ -1,6 +1,6 @@
 <template>
   <div id="profile-status">
-    <div class="well text-center">
+    <!-- <div class="well text-center">
       <div class="content" v-if="userNone">
         <img src="../assets/img/icons/icon-identity.svg" class="contribute-icon-lg" alt="Icon">
         <br>
@@ -25,7 +25,7 @@
         <p >Your profile was rejected</p>
         <router-link class="btn btn-outline-primary" to="/ico/verification">Review</router-link>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

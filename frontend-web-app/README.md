@@ -1,6 +1,6 @@
 # README
 
-This is the README for the GBX ICO Listing frontend website app
+This is the README for the Wealthe Migrate Contribution Dashboard frontend website app
 
 ## Configuration
 
