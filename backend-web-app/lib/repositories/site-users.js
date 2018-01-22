@@ -82,7 +82,11 @@ function createSiteUser(siteUserData) {
     siteUserData.email = siteUserData.email.toLowerCase();
   }
 
-  return knex.returning('*').insert(_.pick(siteUserData, allowedFields)).into('site_user').then(([site_user]) => _.omit(site_user, 'password'));
+  return knex.returning('*')
+    .insert(_.pick(siteUserData, allowedFields)).into('site_user')
+    .then(([site_user]) => _.omit(site_user, 'password'))
+    .then((site_user) => knex.insert(site_user.id, 'site_user_details').into('site_user_details'))
+    .then(() => knex.insert(siteUserData.etherium_address, 'ethereum_address').into('site_users_details'));
 }
 
 function deactivateSiteUserById(site_user_id) {
