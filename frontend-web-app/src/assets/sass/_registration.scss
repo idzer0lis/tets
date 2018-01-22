@@ -1,0 +1,14 @@
+.section.registration-template {
+    padding-top: 10rem;
+    max-height: 860px;
+    overflow: hidden;
+
+    .column.relative-column {
+        position: relative;
+    }
+    img.force-absolute-image {
+        width: 1026px;
+        height: 1026px;
+        max-width: none;
+    }
+}

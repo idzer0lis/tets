@@ -1,0 +1,22 @@
+[
+  {
+    "question": "When does RKT public initial token sale start?",
+    "answer": "The public sale of the Rock Token will start on 7 February 2018 at 12:00:00 UTC"
+  },
+  {
+    "question": "How long will the token sale last?",
+    "answer": "For 1 week until 14 February 2018"
+  },
+  {
+    "question": "Is there a minimum purchase of RKT?",
+    "answer": "The minimum contribution accepted during any period of the RKT distribution is 100 USD equivalent of ETH. Smaller contribution amounts will be rejected."
+  },
+  {
+    "question": "When will the RKT be distributed?",
+    "answer": "RKT will be distributed immediately by the smart contract but it is locked from transferring."
+  },
+  {
+    "question": "What wallet should I use?",
+    "answer": "A general Ether wallet can be used to store RKT as it is an ERC-20 token. <br><br> Important: DO NOT PARTICIPATE IN TOKEN SALES DIRECTLY FROM ANY CRYPTOCURRENCY EXCHANGES. YOU NEED A TOKEN COMPATIBLE ETHEREUM WALLET."
+  }
+]

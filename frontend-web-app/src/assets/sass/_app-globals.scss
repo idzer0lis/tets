@@ -1,0 +1,339 @@
+
+h1 {
+  line-height: 1;
+}
+h2 {
+  font-weight: 900;
+  line-height: 1.1;
+}
+ol {
+  padding-left: 22px;
+  li {
+    margin-bottom: $line-height-computed/2;
+  }
+}
+a {
+  transition: $transition-fast;
+  text-decoration: none !important;
+}
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+.section {
+  padding: 70px 0;
+}
+.section-padding-sm {
+  padding: 40px 0;
+}
+
+.section-title {
+  margin: 0 0 30px;
+}
+
+.section-subtitle {
+  margin: 0 0 30px;
+}
+
+.section-header-extra-link {
+  margin-top: 15px;
+  display: inline-block;
+}
+
+
+/*====== COUNTER ======*/
+
+.counter {
+  margin: 0 auto 20px;
+  .box {
+    text-align: center;
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    margin: 0 5px 0 0;
+    padding: 00;
+    border: 1px solid white;
+    border-radius: $border-radius-large;
+    .number {
+      font-size: 36px;
+      font-weight: 500;
+      display: block;
+    }
+    .subtitle {
+      font-size: 13px;
+      font-weight: 400;
+      display: block;
+      margin-top: -10px;
+    }
+  }
+}
+
+
+/*====== BUTTONS ======*/
+
+.btn {
+  text-transform: uppercase;
+  box-shadow: none !important;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.btn-primary {
+  &:focus {
+    background: $red;
+    border-color: $red;
+    color: white;
+  }
+}
+.btn-lg {
+  font-size: $font-size-base;
+  padding: 13px 30px;
+}
+.btn-black {
+  @include button-variant(white, $gray-darkest, $gray-darkest);
+}
+.btn-outline-white {
+  @include button-variant(white, transparent, white);
+  background: transparent;
+  border-color: white !important;
+  color: white;
+  &:hover {
+    background: $red-dark !important;
+    border-color: white !important;
+    color: white;
+  }
+}
+.btn-outline-primary {
+  @include button-variant($brand-primary, transparent, $brand-primary);
+  &:hover {
+    background: $brand-primary;
+    border-color: white;
+    color: white;
+  }
+}
+.btn-w-img-icon {
+  padding-left: 50px;
+  position: relative;
+  .icon, img {
+    width: 18px;
+    position: absolute;
+    top: 11px;
+    left: 25px;
+  }
+}
+
+
+/*====== ALERTS ======*/
+
+div[role="alert"].alert {
+  z-index: 99999;
+}
+
+.alert {
+  z-index: 99999;
+  padding: 15px 20px 15px 20px;
+  min-width: 350px;
+  &.alert-dismissible {
+    padding-right: 35px;
+  }
+  .close {
+    &:hover {
+      color: white;
+      opacity: 1;
+    }
+  }
+  &.alert-band {
+    border-radius: 0;
+  }
+}
+
+// toast notifications should appear above contribution overlay
+div[role="alert"].fade.alert {
+  z-index: 9999999;
+}
+
+/*====== FORMS ======*/
+
+.form-control {
+  box-shadow: none;
+
+  &.danger {
+    border-color: $form-danger;
+  }
+
+  &[disabled] {
+    background-color: $red;
+  }
+}
+label {
+  font-weight: normal;
+}
+
+/*====== TABS ======*/
+
+.nav-tabs.custom-tabs {
+  li {
+    a {
+      background: $gray-lighter;
+      color: $text-color;
+      border: 0 !important;
+      border-right: 1px solid white !important;
+      font-weight: 900;
+      border-radius: 0;
+      &:hover {
+        background: $red-lighter;
+        color: white;
+      }
+    }
+    &:first-child a {
+      border-top-left-radius: $border-radius-base;
+    }
+    &:last-child a {
+      border-top-right-radius: $border-radius-base;
+      border-right: 0 !important;
+    }
+    &.active {
+      a, a:hover, a:focus {
+        background: $red;
+        color: white;
+        border-color: white;
+        cursor: pointer;
+        transition: $transition-fast;
+        &::after {
+          content: "";
+          width: 10px;
+          height: 10px;
+          background: $red;
+          //display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          transform: rotate(45deg);
+          bottom: -4px;
+        }
+      }
+    }
+    &.verified {
+      a {
+        background: $brand-success;
+        color: white;
+      }
+    }
+    &.in-progress {
+      a {
+        background: $brand-warning;
+        color: white;
+      }
+    }
+    &.rejected {
+      a {
+        background: $brand-danger;
+        color: white;
+      }
+    }
+  }
+}
+
+.tab-content {
+  @extend .clearfix;
+  background: rgba(white, .8);
+  padding: 40px;
+  ul {
+    li {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+
+/*====== WELLS ======*/
+
+.well {
+  border: none;
+  background: $gray-lightest;
+  box-shadow: none;
+  padding: 30px;
+}
+
+
+/*====== BLOCKQUOTE ======*/
+
+blockquote {
+  color: $gray-light;
+  font-style: italic;
+  border: none;
+  padding: 0 60px;
+  .blockquote-logo {
+    display: block;
+    width: 70px;
+    margin: 0 0 20px;
+  }
+  .blockquote-text {
+    width: 100%;
+    display: block;
+    position: relative;
+    &:before {
+      content: '\f10d';
+      color: darken($gray-lightest, 10%);
+      font-family: "FontAwesome";
+      font-style: normal;
+      font-size: 48px;
+      position: absolute;
+      top: -30px;
+      left: -55px;
+    }
+    &:after {
+      content: '\f10e';
+      color: darken($gray-lightest, 10%);
+      font-family: "FontAwesome";
+      font-style: normal;
+      font-size: 48px;
+      position: absolute;
+      bottom: -30px;
+      right: -55px;
+    }
+  }
+}
+
+
+/*====== PAGE ======*/
+
+.page {
+  min-height: 800px;
+  margin: $navbar-height 0 0;
+}
+.page-content {
+  padding: 40px 0 50px;
+}
+.page-title {
+  margin: 0 0 15px;
+}
+.section-top-subtitle {
+  color: $brand-primary;
+}
+
+#page-intro {
+  background: url('../img/intro-bg-page.jpg') no-repeat center center;
+  background-size: cover;
+  color: white;
+  height: 400px;
+  .container, .row, [class*="col-"] {
+    height: 100%;
+  }
+  .intro-title {
+    margin: 0 auto 30px;
+  }
+}
+
+.flex-center-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.flex-center {
+  width: 100%;
+}
