@@ -1,29 +1,18 @@
 <template>
-  <modal name="registration-terms-and-conditions"
-         :width="'500px'"
-         :height="'420px'"
-         :clickToClose="false"
-         @before-open="beforeOpen">
-    <div class="modal-body text-center">
-      <p>Here in follow our terms and conditions, which you should definitely accept in order to contribute to the Rock Token Sale.</p>
-      <div class="terms-and-conditions" v-on:scroll="termsContainerScrolled" v-prevent-parent-scroll>
-        <terms-and-conditions-content />
-        <div v-observe-visibility="visibilityChanged"></div>
-      </div>
-      <br>
-      <label @click="checkboxClicked" class="m-checkbox m-checkbox--bold"><input type="checkbox" :disabled="!termsFullyRead" v-model="termsAgreement"> <strong>I have read and agree to the terms and conditions outlined above</strong><span></span></label>
-      <div class="clearfix"></div>
-      <br>
-      <button class="btn btn-warning" type="button" v-on:click="cancelClicked">Cancel <i class="fa fa-close"></i></button>
-      <button class="btn btn-primary" type="button" v-bind:disabled="!termsAgreement" @click="continueClicked">Continue <i class="fa fa-arrow-right"></i></button>
+  <div>
+    <div class="terms-and-conditions" v-on:scroll="termsContainerScrolled" v-prevent-parent-scroll>
+      <terms-and-conditions-content />
+      <div v-observe-visibility="visibilityChanged"></div>
     </div>
-  </modal>
+    <br>
+    <label @click="checkboxClicked" class="m-checkbox m-checkbox--bold"><input type="checkbox" :disabled="!termsFullyRead" v-model="termsAgreement"> <strong>I have read and accept the Terms and Conditions</strong><span></span></label>
+  </div>
 </template>
 <script>
   import TermsAndConditionsContent from './TermsAndConditionsContent.vue';
 
   export default {
-    name: 'RegistrationTermsAndConditionsModal',
+    name: 'RegistrationTCAgreement',
     data() {
       return {
         termsAgreement: false,

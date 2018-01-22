@@ -1,89 +1,72 @@
 <template>
-  <div id="page-register" class="page">
-    <registration-terms-and-conditions-modal></registration-terms-and-conditions-modal>
-    <section id="page-intro">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="login-box-wrapper">
-              <div class="login-box">
-                <router-link to="/login" class="extra-login-register-link btn btn-outline-white">
-                  <span>Log into your account </span>
-                  <i class="fa fa-arrow-right"></i>
-                </router-link>
-                <header class="login-box-header">
-                  <h2 class="text-center">Register new account</h2>
-                </header>
-                <div class="login-box-body">
-                  <form action="/api/register" class="form" method="post">
-                    <div class="form-group">
-                      <input type="text" name="email" id="email"
-                             class="form-control" :class="{ danger: emailError }"
-                             @focus="emailError = false"
-                             placeholder="Email"
-                             v-model="email"
-                             v-bind:disabled="actionInProgress"/>
-                    </div>
-                    <div class="form-group">
-                      <input type="password" autocomplete="off" name="password" id="password"
-                             class="form-control" :class="{ danger: passError }"
-                             @focus="passError = false"
-                             placeholder="Password"
-                             v-model="password"
-                             v-bind:disabled="actionInProgress"/>
-                    </div>
-                    <p>Password must have at least 8 characters and must contain lower and upper case letters, numbers and at least one of the characters !@#$%^&*()_-+=[];:?,.</p>
-                    <div class="form-group">
-                      <input type="password" autocomplete="off" name="confirm_password" id="confirm_password"
-                             class="form-control" :class="{ danger: confPassError }"
-                             @focus="confPassError = false"
-                             placeholder="Confirm password"
-                             v-model="confirm_password"
-                             v-bind:disabled="actionInProgress"/>
-                    </div>
-                    <div class="form-group">
-                      <recaptcha></recaptcha>
-                    </div>
-                    <div class="form-group">
-                      <label for="terms_agreed">
-                        <input @change="termsAgreedChanged" type="checkbox" name="terms_agreed" id="terms_agreed" v-model="terms_agreed" v-bind:disabled="actionInProgress">
-                        I accept the Terms and Conditions
-                      </label>
-                    </div>
-                    <div class="form-group">
-                      <label for="terms_chinese">
-                        <input type="checkbox" name="terms_chinese" id="terms_chinese" v-model="terms_chinese" v-bind:disabled="actionInProgress">
-                        I am NOT a resident of the People's Republic of China or an entity formed under the laws of the People's Republic of China.
-                      </label>
-                    </div>
-                    <div class="form-group">
-                      <label for="terms_afghan">
-                        <input type="checkbox" name="terms_afghan" id="terms_afghan" v-model="terms_afghan" v-bind:disabled="actionInProgress">
-                        I herein certify that I am NOT a citizen of or resident of any of the following countries and/or territories: United States of America, Japan, South Korea, Afghanistan, Bosnia and Herzegovina, Central African Republic, Cuba, Democratic Republic of the Congo, Democratic People's Republic of Korea, Eritrea, Ethiopia, Guinea-Bissau, Iran, Iraq,  Libya, Lebanon, Somalia, South Sudan, Sudan, Syria, Uganda,  Vanuatu, Yemen.
-                      </label>
-                    </div>
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary btn-block" v-on:click.prevent="submitRegister()" v-bind:disabled="actionInProgress || !submitEnabled">Register</button>
-                    </div>
-                  </form>
-                </div>
-                <footer class="login-box-footer text-center">
-                  <p>Already have an account?</p>
-                  <router-link to="/login">Log into your account here <i class="fa fa-arrow-right"></i></router-link>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+  <registration-template>
+        <form-wizard @on-complete="submitRegister" shape="circle" color="#20A1F2" error-color="#ff4949">
+          <tab-content :before-change="validateFirstStep">
+            <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
+            <p><small>Account details</small></p>
+            <b-field label="E-mail address">
+              <b-input type="email"
+                  placeholder="me@example.com"
+                  v-model="email" 
+                  :disabled="actionInProgress">
+              </b-input>
+            </b-field>
+
+            <b-field label="Password">
+                <b-input type="password" 
+                    placeholder="Your password"
+                    autocomplete="off"
+                    v-model="password" 
+                    :disabled="actionInProgress">
+                </b-input>
+            </b-field>
+
+            <b-field label="Confirm Password">
+                <b-input type="password" 
+                    placeholder="Retype password"
+                    autocomplete="off"
+                    v-model="confirm_password" 
+                    :disabled="actionInProgress">
+                </b-input>
+            </b-field>
+          </tab-content>
+          <tab-content :before-change="validateSecondStep">
+            <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
+            <p><small>WealthE Token Address</small></p>
+            <p>This is where you will receive your WealthE tokens. Please enter a valid Ethereum address.</p>
+            <p>Please note that you cannot change this address after.</p>
+            <p>Use MyEtherWallet.com or any ERC-20 compliant Ethereum wallets.</p>
+            <b-field label="Ethereum Address">
+              <b-input type="text"
+                  placeholder="eg 0x8703273072382382973203"
+                  v-model="ethereum_address" 
+                  :disabled="actionInProgress"
+                  maxlength="42"
+                  has-counter="true">
+              </b-input>
+            </b-field>
+          </tab-content>
+          <tab-content :before-change="validateThirdStep">
+            <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
+            <p><small>Terms and Conditions</small></p>
+            <registration-t-c-agreement />
+          </tab-content>
+
+          <el-button type="primary" slot="prev">Back</el-button>
+          <el-button type="primary" slot="next">Next</el-button>
+          <el-button type="primary" slot="finish">Finish</el-button>
+        </form-wizard>
+    </registration-template>
 </template>
 
 
 <script>
+  import RegistrationTemplate from './RegistrationTemplate.vue';
+  import {FormWizard, TabContent} from 'vue-form-wizard';
   import Recaptcha from './Recaptcha.vue';
-  import RegistrationTermsAndConditionsModal from "./RegistrationTermsAndConditionsModal";
+  import RegistrationTCAgreement from "./RegistrationTCAgreement";
+
+  import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
   export default {
     name: 'Register',
@@ -117,7 +100,10 @@
       },
     },
     components: {
-      RegistrationTermsAndConditionsModal,
+      RegistrationTemplate,
+      FormWizard,
+      TabContent,
+      RegistrationTCAgreement,
       Recaptcha,
     },
     mounted() {
