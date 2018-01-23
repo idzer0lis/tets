@@ -26,6 +26,7 @@ exports.up = async function up(knex) {
     table.unique('password_reset_code');
     table.unique('email_change_confirmation_code');
 
+    table.boolean('activated').notNullable().default(false);
 
   });
 
