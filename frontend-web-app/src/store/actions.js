@@ -18,7 +18,7 @@ export const logIn = async ({ commit }, {
       });
 
       commit('LOG_IN', { user: body.payload.user, userDetails: body.payload.userDetails, settings: body.payload.icoContributionSettings });
-      $router.push(redirect || '/ico/contribute');
+      // $router.push(redirect || '/ico/contribute');
     } else {
       $notify({
         type: 'danger',
