@@ -191,13 +191,13 @@ export const confirmAccount = async ({} = {}, { $http, $router, $notify, code, r
 };
 
 export const checkEtheriumAddress = async ({ commit }, {
-  etherium_address, $http, $router, $notify, redirect = null,
+  etherium_address, $http, $notify,
 }) => {
   commit('START_GLOBAL_ACTION');
 
   try {
     const { body } = await $http.post(API_ROOT_URL + '/api/check-etherium-address', {
-      etherium_address,
+      etherium_address
     });
 
     if (!Array.isArray(body.message)) {
@@ -237,7 +237,7 @@ export const checkEtheriumAddress = async ({ commit }, {
 
 
 export const register = async ({ commit }, {
-  email, password, confirm_password, gRecaptchaResponse, $http, $router, $notify, redirect = null,
+  email, password, confirm_password, gRecaptchaResponse, etherium_address, $http, $router, $notify, redirect = null,
 }) => {
   commit('START_GLOBAL_ACTION');
 
@@ -247,6 +247,7 @@ export const register = async ({ commit }, {
       password,
       confirm_password,
       gRecaptchaResponse,
+      etherium_address
     });
 
     if (!Array.isArray(body.message)) {

@@ -5,15 +5,15 @@ exports.up = async function up(knex) {
 
     table.integer('site_user_id').unsigned().notNullable();
 
-    table.string('first_name', 100).notNullable();
-    table.string('last_name', 100).notNullable();
-    table.string('gender', 1).notNullable();
-    table.string('nationality', 100).notNullable();
-    table.string('country_of_residence', 100).notNullable();
-    table.string('home_address', 250).notNullable();
-    table.date('date_of_birth').notNullable();
-    table.string('identity_document_type', 50).notNullable();
-    table.string('identity_document_number', 50).notNullable();
+    table.string('first_name', 100);
+    table.string('last_name', 100);
+    table.string('gender', 1);
+    table.string('nationality', 100);
+    table.string('country_of_residence', 100);
+    table.string('home_address', 250);
+    table.date('date_of_birth');
+    table.string('identity_document_type', 50);
+    table.string('identity_document_number', 50);
 
     table.string('etherium_address', 150);
     table.unique('etherium_address');
@@ -21,7 +21,7 @@ exports.up = async function up(knex) {
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
 
-    table.integer('updated_by_user_id').unsigned().notNullable();
+    table.integer('updated_by_user_id').unsigned();
 
     table.foreign('site_user_id').references('site_user.site_user_id');
     table.foreign('updated_by_user_id').references('user.user_id');

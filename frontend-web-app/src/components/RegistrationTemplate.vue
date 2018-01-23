@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'RegistrationTemplate',
-  props: ['contentElement'],
+
   data() {
     return {
       contentElement: this.contentElement,

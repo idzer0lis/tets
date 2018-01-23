@@ -20,6 +20,7 @@ module.exports = {
   getSiteUserByPasswordResetCode,
   getSiteUserDetailsById,
   setSiteUserPasswordResetCode,
+  checkEtheriumAddress
 };
 /* eslint-enable no-use-before-define */
 
@@ -74,27 +75,31 @@ function createSiteUser(siteUserData) {
   const allowedFields = [
     'email',
     'activation_code',
-    'password',
-    etherium_address,
+    'password'
   ];
 
   if (siteUserData.email) {
     // eslint-disable-next-line no-param-reassign
     siteUserData.email = siteUserData.email.toLowerCase();
   }
-  console.log(siteUserData);
+
   return knex.returning('*')
     .insert(_.pick(siteUserData, allowedFields)).into('site_user')
     .then(([site_user]) => _.omit(site_user, 'password'))
     .then(function(site_user) {
-      console.log('site_users create repo', site_user);
 
-      knex
-        .insert(siteUserData.etherium_address, 'etherium_address')
-        .into('site_users_details')
-        .returning('*')
-        .then(function(site_user) {
-          knex.insert(site_user.site_user_details_id, 'site_user_details').into('site_user_details');
+      return knex
+        .insert({'site_user_id': site_user.site_user_id, 'etherium_address': siteUserData.etherium_address})
+        .into('site_user_details')
+        .returning('site_user_details_id')
+        .then(function(id) {
+
+          return knex
+            .update({'site_user_details_id': parseInt(id)})
+            .where({ 'site_user.site_user_id': parseInt(id)})
+            .into('site_user')
+            .returning('*')
+            .then(([site_user]) => _.omit(site_user, 'password'))
         })
       });
 }
@@ -160,6 +165,12 @@ function getSiteUserByEmail(email) {
   return knex('site_user')
     .where({ email })
     .first();
+}
+
+function checkEtheriumAddress(etheriumAddress) {
+  return knex('site_user_details')
+    .where({'etherium_address': etheriumAddress })
+    .first()
 }
 
 function getSiteUserByPasswordResetCode(passwordResetCode) {
