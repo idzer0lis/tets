@@ -20,14 +20,6 @@ export const LOG_IN = (state, { user, settings }) => {
   state.user.id = user.site_user_id;
   state.user.email = user.email;
   state.user.verificationStatusCode = user.identity_verification_status_code;
-  state.icoContributionSettings.status = settings && settings.status ? settings.status : {};
-  state.icoContributionSettings.contributionLimit = settings !== null ? settings.user_contribution_limit : null;
-  state.icoContributionSettings.startDate = settings !== null ? settings.start_date : null;
-  state.icoContributionSettings.endDate = settings !== null ? settings.end_date : null;
-  state.icoContributionSettings.nextStatusAt = settings && settings.status ? settings.status.nextStatusAt : null;
-  state.icoContributionSettings.contributionTotalCap = settings !== null ? settings.contribution_total_cap : null;
-  state.icoContributionSettings.totalRaised = settings !== null ? settings.total_raised : null;
-  state.icoContributionSettings.serverCommunicationError = settings !== null ? settings.serverCommunicationError : true;
 };
 
 export const LOG_OUT = (state) => {
@@ -41,14 +33,6 @@ export const LOG_OUT = (state) => {
   state.user.details.lastName = null;
   state.user.details.nationality = null;
 
-  state.icoContributionSettings.status = {};
-  state.icoContributionSettings.contributionLimit = null;
-  state.icoContributionSettings.startDate = null;
-  state.icoContributionSettings.endDate = null;
-  state.icoContributionSettings.nextStatusAt = null;
-  state.icoContributionSettings.contributionTotalCap = null;
-  state.icoContributionSettings.totalRaised = null;
-  state.icoContributionSettings.serverCommunicationError = false;
 };
 
 export const UPDATE_SESSION = (state, { user, userDetails, settings }) => {
@@ -126,4 +110,8 @@ export const SET_REGISTRATION_TERMS_ACCEPTED = (state, accepted) => {
 
 export const SET_FLASH_MESSAGES = (state, messages) => {
   state.flashMessages = messages ? messages : null;
+};
+
+export const ETHERIUM_ADDRESS_CHECK = (state, etherium_address_check) => {
+  state.etherium_address_check = etherium_address_check !== null ? etherium_address_check : null;
 };

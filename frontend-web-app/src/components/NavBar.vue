@@ -64,23 +64,20 @@ export default {
     listingLink() {
       return this.listingRoutesAreRedirected && `${process.env.LISTING_ROUTES_ROOT_URL}/listing` || '';
     },
-    profileRoutesAreRedirected () {
-      return !!process.env.PROFILE_ROUTES_ROOT_URL;
-    },
     profileLink() {
-      return this.profileRoutesAreRedirected && `${process.env.PROFILE_ROUTES_ROOT_URL}/profile` || '';
+      return `${process.env.PROFILE_ROUTES_ROOT_URL}/profile` || '';
     },
     loginLink() {
-      return this.profileRoutesAreRedirected && `${process.env.PROFILE_ROUTES_ROOT_URL}/login` || '';
+      return `${process.env.PROFILE_ROUTES_ROOT_URL}/login` || '';
     },
     logoutLink() {
-      return this.profileRoutesAreRedirected && `${process.env.PROFILE_ROUTES_ROOT_URL}/logout` || '';
+      return `${process.env.PROFILE_ROUTES_ROOT_URL}/logout` || '';
     },
     registerLink() {
-      return this.profileRoutesAreRedirected && `${process.env.PROFILE_ROUTES_ROOT_URL}/register` || '';
+      return `${process.env.PROFILE_ROUTES_ROOT_URL}/register` || '';
     },
     contributeLink() {
-      return this.profileRoutesAreRedirected && `${process.env.PROFILE_ROUTES_ROOT_URL}/ico/contribute` || '';
+      return `${process.env.PROFILE_ROUTES_ROOT_URL}/ico/contribute` || '';
     },
     navSectionsVisible () {
       return process.env.PROHIBITED_COUNTRY_BUILD !== 'YES';

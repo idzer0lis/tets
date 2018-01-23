@@ -125,15 +125,15 @@ const routes = [
     },
     beforeEnter: authGuard,
   },
-  // {
-  //   path: '/confirm',
-  //   name: 'ConfirmAccount',
-  //   component: ConfirmAccount,
-  //   meta: {
-  //     title: 'Wealthe Migrate',
-  //   },
-  //   beforeEnter: nonAuthGuard,
-  // },
+  {
+    path: '/confirm',
+    name: 'ConfirmAccount',
+    component: ConfirmAccount,
+    meta: {
+      title: 'Wealthe Migrate',
+    },
+    beforeEnter: nonAuthGuard,
+  },
   // {
   //   path: '/_prohibited',
   //   name: 'ProhibitedCountry',
