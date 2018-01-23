@@ -127,3 +127,7 @@ export const SET_REGISTRATION_TERMS_ACCEPTED = (state, accepted) => {
 export const SET_FLASH_MESSAGES = (state, messages) => {
   state.flashMessages = messages ? messages : null;
 };
+
+export const ETHERIUM_ADDRESS_CHECK = (state, etherium_address_check) => {
+  state.etherium_address_check = etherium_address_check !== null ? etherium_address_check : null;
+};

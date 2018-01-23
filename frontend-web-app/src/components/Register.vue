@@ -7,28 +7,29 @@
             <b-field label="E-mail address">
               <b-input type="email"
                   placeholder="me@example.com"
-                  v-model="email" 
+                  v-model="email"
                   :disabled="actionInProgress">
               </b-input>
             </b-field>
 
             <b-field label="Password">
-                <b-input type="password" 
+                <b-input type="password"
                     placeholder="Your password"
                     autocomplete="off"
-                    v-model="password" 
+                    v-model="password"
                     :disabled="actionInProgress">
                 </b-input>
             </b-field>
 
             <b-field label="Confirm Password">
-                <b-input type="password" 
+                <b-input type="password"
                     placeholder="Retype password"
                     autocomplete="off"
-                    v-model="confirm_password" 
+                    v-model="confirm_password"
                     :disabled="actionInProgress">
                 </b-input>
             </b-field>
+
           </tab-content>
           <tab-content :before-change="validateSecondStep">
             <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
@@ -39,17 +40,17 @@
             <b-field label="Ethereum Address">
               <b-input type="text"
                   placeholder="eg 0x8703273072382382973203"
-                  v-model="ethereum_address" 
+                  v-model="etherium_address"
                   :disabled="actionInProgress"
-                  maxlength="42"
-                  has-counter="true">
+                  maxlength="42">
               </b-input>
             </b-field>
           </tab-content>
-          <tab-content :before-change="validateThirdStep">
+          <tab-content>
             <h1 class="is-uppercase has-text-weight-bold">Create Account</h1>
             <p><small>Terms and Conditions</small></p>
             <registration-t-c-agreement />
+            <recaptcha></recaptcha>
           </tab-content>
 
           <el-button type="primary" slot="prev">Back</el-button>
@@ -81,11 +82,13 @@
         terms_agreed: false,
         terms_chinese: false,
         terms_afghan: false,
+        etherium_address: '',
+        specialChars: "!@#$%^&*()_-+=[];:?,."
       };
     },
     computed: {
       actionInProgress() { return this.$store.state.globalActionInProgress; },
-      submitEnabled() { return this.terms_chinese && this.terms_afghan && this.terms_agreed && this.registrationTermsAccepted; },
+      // submitEnabled() { return this.terms_chinese && this.terms_afghan && this.terms_agreed && this.registrationTermsAccepted; },
       gRecaptchaResponse() { return this.$store.state.userCaptcha; },
       registrationTermsAccepted() { return this.$store.state.registrationTermsAccepted; },
     },
@@ -110,15 +113,15 @@
       this.$store.dispatch('setRegistrationTermsAccepted', { accepted: false, });
     },
     methods: {
-      termsAgreedChanged() {
-        this.$nextTick(() => {
-          if (this.terms_agreed) {
-            this.terms_agreed = false;
-            this.$modal.show('registration-terms-and-conditions');
+      checkForSpecialChars(string){
+        for(let i = 0; i < this.specialChars.length;i++){
+          if(string.indexOf(this.specialChars[i]) > -1){
+            return true
           }
-        });
+        }
+        return false;
       },
-      submitRegister: function () {
+      validateFirstStep() {
         if (!this.email) {
           this.emailError = true;
           this.$notify({
@@ -173,16 +176,7 @@
           return;
         }
 
-        var specialChars = "!@#$%^&*()_-+=[];:?,.";
-        var checkForSpecialChars = function(string){
-            for(var i = 0; i < specialChars.length;i++){
-                if(string.indexOf(specialChars[i]) > -1){
-                    return true
-                }
-            }
-            return false;
-        }
-        if (!checkForSpecialChars(this.password)) {
+        if (!this.checkForSpecialChars(this.password)) {
           this.passError = true;
           this.$notify({
             type: 'danger',
@@ -210,6 +204,40 @@
           });
           return;
         }
+
+        return true;
+      },
+      validateSecondStep() {
+        if (!this.etherium_address) {
+          this.$notify({
+            type: 'danger',
+            content: 'Please confirm Etherium Address'
+          });
+          return;
+        }
+
+        return this.$store.dispatch('checkEtheriumAddress', {
+          etherium_address: this.etherium_address,
+          $http: this.$http,
+          $notify: this.$notify,
+        }).then(() => {
+          if (this.$store.state.etherium_address_check) {
+            return true;
+          }
+        });
+
+      },
+      termsAgreedChanged() {
+        this.$nextTick(() => {
+          if (this.terms_agreed) {
+            this.terms_agreed = false;
+            this.$modal.show('registration-terms-and-conditions');
+          }
+        });
+      },
+      submitRegister: function () {
+
+        if (!this.validateFirstStep()) return;
 
         if (!this.gRecaptchaResponse) {
           this.$notify({
@@ -242,6 +270,7 @@
               $http: this.$http,
               $router: this.$router,
               $notify: this.$notify,
+              etherium_address: this.etherium_address
             });
           });
       },

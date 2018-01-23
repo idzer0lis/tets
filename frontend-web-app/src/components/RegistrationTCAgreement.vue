@@ -2,10 +2,9 @@
   <div>
     <div class="terms-and-conditions" v-on:scroll="termsContainerScrolled" v-prevent-parent-scroll>
       <terms-and-conditions-content />
-      <div v-observe-visibility="visibilityChanged"></div>
     </div>
     <br>
-    <label @click="checkboxClicked" class="m-checkbox m-checkbox--bold"><input type="checkbox" :disabled="!termsFullyRead" v-model="termsAgreement"> <strong>I have read and accept the Terms and Conditions</strong><span></span></label>
+    <label class="m-checkbox m-checkbox--bold"><input type="checkbox" @click="checkboxClicked" v-model="termsAgreement"> <strong>I have read and accept the Terms and Conditions</strong><span></span></label>
   </div>
 </template>
 <script>
@@ -28,42 +27,16 @@
           this.termsFullyRead = true;
         }
       },
-      checkboxClicked() {
+      checkboxClicked(e) {
         if (!this.termsFullyRead) {
+          e.preventDefault();
           this.$notify({
             type: 'warning',
             content: 'You must read the entire Terms and Conditions before agreeing',
           });
+        } else {
+          this.$store.dispatch('setRegistrationTermsAccepted', { accepted: !this.termsAgreement });
         }
-      },
-      visibilityChanged(isVisible) {
-        if (isVisible) {
-          this.termsFullyRead = true;
-        }
-      },
-      beforeOpen() {
-        this.termsAgreement = false;
-        this.termsFullyRead = false;
-      },
-      beforeClose(/* event */) {
-        // We could stop the closing here
-        // event.stop();
-      },
-      continueClicked() {
-        if (!this.termsAgreement) {
-          return;
-        }
-
-        this.$store.dispatch('setRegistrationTermsAccepted', { accepted: true });
-        this.$modal.hide('registration-terms-and-conditions');
-      },
-      cancelClicked() {
-        this.$store.dispatch('setRegistrationTermsAccepted', { accepted: false });
-        this.$notify({
-          type: 'warning',
-          content: 'You must agree to the Terms and Conditions before being able to register',
-        });
-        this.$modal.hide('registration-terms-and-conditions');
       },
     },
   };
