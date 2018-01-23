@@ -113,9 +113,6 @@ var DatatableRemoteAjaxDemo = function () {
             }
 
             return '\
-						       <a href="/users/user-ips/' + row.user_id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="User IPs">\
-                     <i class="la la-list-ul"></i> \
-                   </a>\
                    '+ resendEmailButton +' \
 					';
           },
