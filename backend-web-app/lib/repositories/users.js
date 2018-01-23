@@ -176,7 +176,7 @@ function createUser(userData) {
     userData.email = userData.email.toLowerCase();
   }
 
-  return knex.returning('*').insert(userData).into('user').debug()
+  return knex.returning('*').insert(userData).into('user')
     .then(([user]) => _.omit(user, 'password'));
 }
 
