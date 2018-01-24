@@ -80,8 +80,8 @@ var DatatableRemoteAjaxDemo = function () {
           width: 100,
           template: function (row) {
             var status = {
-              true: {'title': 'Active', 'class': 'm-badge--success'},
-              false: {'title': 'Inactive', 'class': ' m-badge--danger'},
+              1: {'title': 'Active', 'class': 'm-badge--success'},
+              0: {'title': 'Inactive', 'class': ' m-badge--danger'},
             };
             return '<span class="m-badge ' + status[row.activated].class + ' m-badge--wide">' + status[row.activated].title + '</span>';
           }
@@ -96,7 +96,7 @@ var DatatableRemoteAjaxDemo = function () {
             let activateSiteUserButton = '';
             let deactivateSiteUserButton = '';
 
-            if (row.activated === false) {
+            if (row.activated === '0') {
               activateSiteUserButton = '<form action="/site-users/activate/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
                                       <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
                                       <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Activate site user">\
@@ -111,7 +111,7 @@ var DatatableRemoteAjaxDemo = function () {
                                    </form>';
             }
 
-            if (row.activated === true) {
+            if (row.activated === '1') {
               deactivateSiteUserButton = '<form action="/site-users/deactivate/' + row.site_user_id + '" method="post" class="form-inline m--block-inline">\
                                       <input type="hidden" name="_csrf" value="'+ window.csrfToken +'">\
                                       <button type="submit" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Deactivate site user">\
@@ -132,27 +132,21 @@ var DatatableRemoteAjaxDemo = function () {
 
     var query = datatable.getDataSourceQuery();
 
-    /*
     $('#m_form_status').on('change', function () {
-      // shortcode to datatable.getDataSourceParam('query');
       var query = datatable.getDataSourceQuery();
-      query.Status = $(this).val().toLowerCase();
-      // shortcode to datatable.setDataSourceParam('query', query);
-      datatable.setDataSourceQuery(query);
-      datatable.load();
-    }).val(typeof query.Status !== 'undefined' ? query.Status : '');
-    */
-
-    $('#m_form_type').on('change', function () {
-      // shortcode to datatable.getDataSourceParam('query');
-      var query = datatable.getDataSourceQuery();
-      query['role.role_code'] = $(this).val();
-      // shortcode to datatable.setDataSourceParam('query', query);
+      console.log($(this).val());
+      if ($(this).val() === '1') {
+        query['activated_at'] = 'is not null';
+      } else if ($(this).val() === '0') {
+        query['activated_at'] = 'is null';
+      } else {
+        query['activated_at'] = '';
+      }
       datatable.setDataSourceQuery(query);
       datatable.load();
     }).val(typeof query.Type !== 'undefined' ? query.Type : '');
 
-    $('#m_form_status, #m_form_type').selectpicker();
+    $('#m_form_status').selectpicker();
 
   };
 

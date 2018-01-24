@@ -20,6 +20,10 @@ router.get('/', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_SITE
 })));
 
 router.get('/data', isLoggedIn, authGuard({ permissions: permissionCodes.MANAGE_SITE_USERS }), asyncMiddleware(async (req, res, next) => {
+  if (req.query.datatable.query && !req.query.datatable.query.activated_at) {
+    delete req.query.datatable.query.activated_at;
+  }
+
   const { queryResult, countQueryResult } = await siteUsersRepo.getPagedSiteUsers(req.query.datatable);
   return res.json({
     meta: {

@@ -4,7 +4,7 @@ require('./node-environment');
 module.exports = {
 
   development: {
-    debug: true,
+    debug: false,
     client: 'postgresql',
     connection: {
       host: process.env.DATABASE_HOST,
